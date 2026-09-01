@@ -309,4 +309,1359 @@ button:hover{
 .scorebar i{
   display:block;
   height:100%;
- 
+  width:0%;
+  background:#2463c5;
+  border-radius:20px;
+  transition:width .5s ease;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:#8993a4;
+  font-size:12px;
+  padding:30px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .search{
+    flex-direction:column;
+  }
+
+  #appName{
+    width:100%;
+  }
+
+  .search button{
+    width:100%;
+  }
+
+  .analysis-summary{
+    grid-template-columns:1fr;
+  }
+
+  .result-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  h1{
+    letter-spacing:-2px;
+  }
+
+  .score{
+    flex-wrap:wrap;
+  }
+
+  .scorebar{
+    width:100%;
+    flex-basis:100%;
+    order:2;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="container">
+
+  <span class="badge">
+    B.Sc. COMPUTER SCIENCE • FIELD PROJECT
+  </span>
+
+  <h1>UX Recommendations</h1>
+
+  <p class="subtitle">
+    Identify common application usability problems and get
+    practical recommendations to improve the user experience.
+  </p>
+
+  <div class="search">
+
+    <input
+      id="appName"
+      type="text"
+      placeholder="Enter application / website name"
+      autocomplete="off"
+    >
+
+    <button id="analyzeBtn" type="button">
+      Analyze UX
+    </button>
+
+  </div>
+
+  <div id="nameError" class="error">
+    Please enter an application or website name.
+  </div>
+
+  <div id="invalidApp" class="error">
+    Application not recognized. Try Chrome, Instagram, WhatsApp,
+    YouTube, Amazon, Flipkart, Netflix, Spotify, etc.
+  </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+<!-- ================= PROBLEM CHECKLIST ================= -->
+
+<section class="card" id="problemCard">
+
+  <h2>Select UX Problems</h2>
+
+  <div class="small">
+    Tick every problem observed during your field survey
+    or application evaluation.
+  </div>
+
+
+  <div class="grid">
+
+
+    <!-- 1 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Difficult Navigation"
+      >
+
+      <div>
+
+        <strong>Difficult Navigation</strong>
+
+        <span>
+          Users struggle to find pages or important options.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 2 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Confusing Interface"
+      >
+
+      <div>
+
+        <strong>Confusing Interface</strong>
+
+        <span>
+          The interface is difficult to understand at first use.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 3 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Unclear Buttons"
+      >
+
+      <div>
+
+        <strong>Unclear Buttons</strong>
+
+        <span>
+          Buttons or actions are difficult to identify.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 4 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Poor Color Combination"
+      >
+
+      <div>
+
+        <strong>Poor Color Combination</strong>
+
+        <span>
+          Colors reduce readability or make information unclear.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 5 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Slow Loading"
+      >
+
+      <div>
+
+        <strong>Slow Loading</strong>
+
+        <span>
+          Users have to wait too long for pages or content.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 6 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Poor Error Messages"
+      >
+
+      <div>
+
+        <strong>Poor Error Messages</strong>
+
+        <span>
+          Users do not understand what went wrong or how to fix it.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 7 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Difficult Login / Signup"
+      >
+
+      <div>
+
+        <strong>Difficult Login / Signup</strong>
+
+        <span>
+          The login or registration process has unnecessary friction.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 8 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Poor Mobile Responsiveness"
+      >
+
+      <div>
+
+        <strong>Poor Mobile Responsiveness</strong>
+
+        <span>
+          The application is difficult to use on phones.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 9 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Accessibility Issues"
+      >
+
+      <div>
+
+        <strong>Accessibility Issues</strong>
+
+        <span>
+          Some users may have difficulty accessing the interface.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 10 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Too Many Steps"
+      >
+
+      <div>
+
+        <strong>Too Many Steps</strong>
+
+        <span>
+          Users need too many actions to complete a common task.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 11 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Unclear Content"
+      >
+
+      <div>
+
+        <strong>Unclear Content</strong>
+
+        <span>
+          Text or information is difficult to understand.
+        </span>
+
+      </div>
+
+    </label>
+
+
+    <!-- 12 -->
+
+    <label class="problem">
+
+      <input
+        type="checkbox"
+        value="Lack of User Feedback"
+      >
+
+      <div>
+
+        <strong>Lack of User Feedback</strong>
+
+        <span>
+          Users are unsure whether their action was successful.
+        </span>
+
+      </div>
+
+    </label>
+
+
+  </div>
+
+
+  <div class="actions">
+
+    <button
+      id="recommendBtn"
+      type="button"
+    >
+      Get Recommendations
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================= RESULT ================= -->
+
+<section class="card" id="result">
+
+
+  <div class="result-header">
+
+    <div>
+
+      <h2 id="resultTitle">
+        UX Analysis
+      </h2>
+
+      <div
+        class="small"
+        id="resultSub"
+        style="margin:5px 0 0"
+      ></div>
+
+    </div>
+
+
+    <div class="context-pill">
+
+      ✦
+
+      <span id="contextType">
+        General Application
+      </span>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- SUMMARY -->
+
+  <div class="analysis-summary">
+
+
+    <div class="summary-box">
+
+      <span>
+        Issues Found
+      </span>
+
+      <strong id="issueCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <span>
+        Priority
+      </span>
+
+      <strong id="summaryPriority">
+        Low
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <span>
+        UX Focus
+      </span>
+
+      <strong id="focusText">
+        Usability
+      </strong>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- RECOMMENDATIONS -->
+
+  <div id="recommendations"></div>
+
+
+
+  <!-- SCORE -->
+
+  <div class="score">
+
+    <strong>
+      Overall UX Priority
+    </strong>
+
+    <div class="scorebar">
+
+      <i id="bar"></i>
+
+    </div>
+
+    <strong id="priority">
+      Low
+    </strong>
+
+  </div>
+
+
+</section>
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  UX Recommendations • Application Usability &
+  User Experience Evaluation
+
+</footer>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/*
+=========================================================
+SUPPORTED APPLICATIONS
+=========================================================
+*/
+
+const validApplications = [
+
+  "chrome",
+  "google chrome",
+  "instagram",
+  "facebook",
+  "snapchat",
+  "tiktok",
+  "twitter",
+  "x",
+  "linkedin",
+  "reddit",
+  "discord",
+
+  "amazon",
+  "flipkart",
+  "myntra",
+  "meesho",
+  "ebay",
+  "ajio",
+  "nykaa",
+
+  "whatsapp",
+  "telegram",
+  "messenger",
+  "signal",
+  "slack",
+
+  "youtube",
+  "netflix",
+  "spotify",
+  "prime video",
+  "hotstar",
+  "jio cinema",
+
+  "gmail",
+  "google",
+  "google maps",
+  "maps",
+  "google drive",
+  "google docs",
+  "google sheets",
+  "google meet",
+  "google calendar",
+
+  "microsoft teams",
+  "microsoft word",
+  "microsoft excel",
+  "microsoft powerpoint",
+  "outlook",
+  "onedrive",
+  "zoom",
+
+  "phonepe",
+  "paytm",
+  "google pay",
+  "zomato",
+  "swiggy",
+  "uber",
+  "ola",
+  "makemytrip",
+  "airbnb",
+
+  "canva",
+  "coursera",
+  "udemy",
+  "duolingo",
+  "chatgpt"
+
+];
+
+
+/*
+=========================================================
+APPLICATION CATEGORIES
+=========================================================
+*/
+
+const categories = {
+
+  "Social Media":[
+    "instagram",
+    "facebook",
+    "snapchat",
+    "tiktok",
+    "twitter",
+    "x",
+    "linkedin",
+    "reddit",
+    "discord"
+  ],
+
+  "E-commerce":[
+    "amazon",
+    "flipkart",
+    "myntra",
+    "meesho",
+    "ebay",
+    "ajio",
+    "nykaa"
+  ],
+
+  "Messaging":[
+    "whatsapp",
+    "telegram",
+    "messenger",
+    "signal",
+    "slack"
+  ],
+
+  "Media / Content":[
+    "youtube",
+    "netflix",
+    "spotify",
+    "prime video",
+    "hotstar",
+    "jio cinema"
+  ],
+
+  "Productivity":[
+    "chrome",
+    "google chrome",
+    "gmail",
+    "google",
+    "google maps",
+    "maps",
+    "google drive",
+    "google docs",
+    "google sheets",
+    "google meet",
+    "google calendar",
+    "microsoft teams",
+    "microsoft word",
+    "microsoft excel",
+    "microsoft powerpoint",
+    "outlook",
+    "onedrive",
+    "zoom"
+  ],
+
+  "Payments / Services":[
+    "phonepe",
+    "paytm",
+    "google pay",
+    "zomato",
+    "swiggy",
+    "uber",
+    "ola",
+    "makemytrip",
+    "airbnb"
+  ],
+
+  "Design / Learning":[
+    "canva",
+    "coursera",
+    "udemy",
+    "duolingo",
+    "chatgpt"
+  ]
+
+};
+
+
+/*
+=========================================================
+RECOMMENDATION DATABASE
+=========================================================
+*/
+
+const recommendations = {
+
+  "Difficult Navigation":
+    "Improve navigation with clear labels, logical grouping and a consistent structure. Keep frequently used options easy to find.",
+
+  "Confusing Interface":
+    "Simplify the interface, remove unnecessary visual elements and create a clear visual hierarchy so users understand what to do next.",
+
+  "Unclear Buttons":
+    "Use descriptive button labels, consistent button styles, adequate spacing and clear interaction states.",
+
+  "Poor Color Combination":
+    "Use a consistent color palette with sufficient contrast. Use accent colors mainly for important actions and feedback.",
+
+  "Slow Loading":
+    "Improve loading performance by optimizing images and reducing unnecessary resources. Display useful loading indicators when content takes time.",
+
+  "Poor Error Messages":
+    "Display specific and understandable error messages near the affected action. Explain what happened and provide a clear way to recover.",
+
+  "Difficult Login / Signup":
+    "Reduce unnecessary fields, provide clear validation and make password recovery and account-related guidance easy to understand.",
+
+  "Poor Mobile Responsiveness":
+    "Use responsive layouts, readable text, touch-friendly controls and appropriate spacing for smaller screens.",
+
+  "Accessibility Issues":
+    "Improve contrast, labels, keyboard access, focus states and text alternatives so the interface can be used by a wider range of users.",
+
+  "Too Many Steps":
+    "Simplify common task flows by removing unnecessary actions and combining related steps where appropriate.",
+
+  "Unclear Content":
+    "Use concise language, meaningful headings, short sections and helpful labels. Place instructions close to the relevant action.",
+
+  "Lack of User Feedback":
+    "Provide immediate feedback through success messages, progress indicators, confirmation states and inline validation."
+};
+
+
+/*
+=========================================================
+APPLICATION-SPECIFIC RECOMMENDATIONS
+=========================================================
+*/
+
+const appSpecific = {
+
+  "E-commerce":{
+
+    "Difficult Navigation":
+      "Keep product categories, Search, Cart, Orders and Account clearly accessible. Use logical product categories and filters.",
+
+    "Unclear Buttons":
+      "Make actions such as Add to Cart, Buy Now and Apply Filter visually distinct and consistently placed.",
+
+    "Poor Color Combination":
+      "Keep product prices, discounts and primary shopping actions visually distinguishable while maintaining readable contrast.",
+
+    "Too Many Steps":
+      "Reduce unnecessary steps between product selection, cart and checkout. Clearly show checkout progress."
+
+  },
+
+
+  "Social Media":{
+
+    "Difficult Navigation":
+      "Keep Feed, Search or Discovery, Messages, Notifications and Profile access predictable and easy to find.",
+
+    "Unclear Buttons":
+      "Use recognizable and consistent controls for actions such as Like, Comment, Share and Save.",
+
+    "Poor Mobile Responsiveness":
+      "Optimize navigation, media controls and touch targets for comfortable use on mobile screens.",
+
+    "Lack of User Feedback":
+      "Clearly indicate when content is posted, saved, shared, deleted or a message has been sent."
+
+  },
+
+
+  "Messaging":{
+
+    "Difficult Navigation":
+      "Keep chats, calls, contacts and settings organized using predictable navigation.",
+
+    "Unclear Buttons":
+      "Use recognizable controls for Send, Reply, Attach, Call and other frequent messaging actions.",
+
+    "Poor Mobile Responsiveness":
+      "Optimize the message composer, attachments and navigation for touch interaction.",
+
+    "Lack of User Feedback":
+      "Clearly indicate message sending, delivery and important success or failure states."
+
+  },
+
+
+  "Media / Content":{
+
+    "Difficult Navigation":
+      "Make Search, Home, Library and playback controls easy to find and keep their placement consistent.",
+
+    "Unclear Buttons":
+      "Use familiar and clearly understandable playback controls with consistent placement.",
+
+    "Slow Loading":
+      "Optimize thumbnails and media delivery and provide useful loading indicators during playback.",
+
+    "Poor Mobile Responsiveness":
+      "Make playback controls, browsing and search comfortable on smaller screens."
+
+  },
+
+
+  "Productivity":{
+
+    "Difficult Navigation":
+      "Organize frequently used tools and settings into clear categories and keep important functions easy to access.",
+
+    "Confusing Interface":
+      "Reduce visual complexity and create a clear hierarchy between primary tools, secondary options and settings.",
+
+    "Unclear Content":
+      "Use concise labels, meaningful headings and clear instructions for important functions.",
+
+    "Too Many Steps":
+      "Reduce unnecessary actions in frequently performed tasks and keep commonly used functions easily accessible."
+
+  },
+
+
+  "Payments / Services":{
+
+    "Difficult Navigation":
+      "Keep important services, transactions, account information and support options clearly organized.",
+
+    "Poor Error Messages":
+      "Clearly explain transaction or service errors and provide an appropriate recovery action.",
+
+    "Difficult Login / Signup":
+      "Make authentication and verification straightforward and provide clear recovery guidance.",
+
+    "Lack of User Feedback":
+      "Provide clear confirmation for important actions such as payments, bookings and transaction status."
+
+  },
+
+
+  "Design / Learning":{
+
+    "Difficult Navigation":
+      "Organize courses, projects, tools or learning resources into clear categories and predictable navigation.",
+
+    "Confusing Interface":
+      "Use a clean hierarchy and keep frequently used tools or learning actions easy to identify.",
+
+    "Unclear Content":
+      "Use concise instructions, meaningful headings and clear descriptions to reduce confusion.",
+
+    "Too Many Steps":
+      "Simplify common learning or creation workflows and avoid unnecessary screens."
+
+  }
+
+};
+
+
+/*
+=========================================================
+NORMALIZE APPLICATION NAME
+=========================================================
+*/
+
+function normalize(value){
+
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g," ");
+
+}
+
+
+/*
+=========================================================
+CHECK APPLICATION
+=========================================================
+*/
+
+function isValidApplication(name){
+
+  const normalized = normalize(name);
+
+  return validApplications.includes(normalized);
+
+}
+
+
+/*
+=========================================================
+GET CATEGORY
+=========================================================
+*/
+
+function getCategory(name){
+
+  const normalized = normalize(name);
+
+  for(const category in categories){
+
+    if(categories[category].includes(normalized)){
+
+      return category;
+
+    }
+
+  }
+
+  return "General Application";
+
+}
+
+
+/*
+=========================================================
+GET RECOMMENDATION
+=========================================================
+*/
+
+function getRecommendation(category, problem){
+
+  if(
+    appSpecific[category] &&
+    appSpecific[category][problem]
+  ){
+
+    return appSpecific[category][problem];
+
+  }
+
+  return recommendations[problem];
+
+}
+
+
+/*
+=========================================================
+ANALYZE UX BUTTON
+=========================================================
+*/
+
+document
+  .getElementById("analyzeBtn")
+  .addEventListener("click",function(){
+
+    const input =
+      document.getElementById("appName");
+
+    const name =
+      input.value.trim();
+
+    const nameError =
+      document.getElementById("nameError");
+
+    const invalidApp =
+      document.getElementById("invalidApp");
+
+    const problemCard =
+      document.getElementById("problemCard");
+
+    const result =
+      document.getElementById("result");
+
+
+    /*
+    EMPTY INPUT
+    */
+
+    if(!name){
+
+      nameError.style.display = "block";
+
+      invalidApp.style.display = "none";
+
+      problemCard.style.display = "none";
+
+      result.style.display = "none";
+
+      input.focus();
+
+      return;
+
+    }
+
+
+    /*
+    INVALID APPLICATION
+    */
+
+    if(!isValidApplication(name)){
+
+      nameError.style.display = "none";
+
+      invalidApp.style.display = "block";
+
+      problemCard.style.display = "none";
+
+      result.style.display = "none";
+
+      input.focus();
+
+      return;
+
+    }
+
+
+    /*
+    VALID APPLICATION
+    */
+
+    nameError.style.display = "none";
+
+    invalidApp.style.display = "none";
+
+    result.style.display = "none";
+
+    problemCard.style.display = "block";
+
+
+    /*
+    Scroll to checklist
+    */
+
+    setTimeout(function(){
+
+      problemCard.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    },100);
+
+  });
+
+
+/*
+=========================================================
+REMOVE ERRORS WHEN USER TYPES
+=========================================================
+*/
+
+document
+  .getElementById("appName")
+  .addEventListener("input",function(){
+
+    document.getElementById("nameError").style.display="none";
+
+    document.getElementById("invalidApp").style.display="none";
+
+  });
+
+
+/*
+=========================================================
+GET RECOMMENDATIONS BUTTON
+=========================================================
+*/
+
+document
+  .getElementById("recommendBtn")
+  .addEventListener("click",function(){
+
+    const name =
+      document.getElementById("appName").value.trim();
+
+    const checked =
+      Array.from(
+        document.querySelectorAll(
+          ".problem input:checked"
+        )
+      );
+
+
+    /*
+    IF NOTHING SELECTED
+    */
+
+    if(checked.length === 0){
+
+      alert(
+        "Please select at least one UX problem."
+      );
+
+      return;
+
+    }
+
+
+    /*
+    GET VALUES
+    */
+
+    const selectedProblems =
+      checked.map(function(item){
+
+        return item.value;
+
+      });
+
+
+    /*
+    GET CATEGORY
+    */
+
+    const category =
+      getCategory(name);
+
+
+    /*
+    PRIORITY
+    */
+
+    let priority = "Low";
+
+    if(selectedProblems.length >= 7){
+
+      priority = "High";
+
+    }
+    else if(selectedProblems.length >= 4){
+
+      priority = "Medium";
+
+    }
+
+
+    /*
+    SCORE
+    Higher score = better UX
+    */
+
+    let score =
+      100 - (selectedProblems.length * 8);
+
+    if(score < 20){
+
+      score = 20;
+
+    }
+
+
+    /*
+    UPDATE RESULT HEADER
+    */
+
+    document.getElementById(
+      "resultTitle"
+    ).textContent =
+      name + " — UX Analysis";
+
+
+    document.getElementById(
+      "contextType"
+    ).textContent =
+      category;
+
+
+    document.getElementById(
+      "issueCount"
+    ).textContent =
+      selectedProblems.length;
+
+
+    document.getElementById(
+      "summaryPriority"
+    ).textContent =
+      priority;
+
+
+    document.getElementById(
+      "resultSub"
+    ).textContent =
+      selectedProblems.length +
+      " UX problem(s) selected from the evaluation checklist.";
+
+
+    /*
+    UX FOCUS
+    */
+
+    document.getElementById(
+      "focusText"
+    ).textContent =
+      selectedProblems[0];
+
+
+    /*
+    RECOMMENDATION AREA
+    */
+
+    const recommendationBox =
+      document.getElementById(
+        "recommendations"
+      );
+
+    recommendationBox.innerHTML = "";
+
+
+    /*
+    CREATE RECOMMENDATION CARDS
+    */
+
+    selectedProblems.forEach(
+      function(problem,index){
+
+        let severity = "Low";
+
+        if(selectedProblems.length >= 7){
+
+          severity = "High";
+
+        }
+        else if(selectedProblems.length >= 4){
+
+          severity = "Medium";
+
+        }
+
+
+        const recommendation =
+          getRecommendation(
+            category,
+            problem
+          );
+
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "result-item";
+
+
+        card.innerHTML = `
+
+          <h3>
+            ${index + 1}. ${problem}
+          </h3>
+
+          <p>
+            <strong>Recommendation:</strong>
+            ${recommendation}
+          </p>
+
+          <div class="reason">
+
+            <strong>Why this matters:</strong>
+
+            Improving this area can make the
+            ${category.toLowerCase()}
+            experience easier to understand,
+            more efficient and more user-friendly.
+
+          </div>
+
+        `;
+
+
+        recommendationBox.appendChild(card);
+
+      }
+    );
+
+
+    /*
+    UPDATE SCORE
+    */
+
+    document.getElementById(
+      "bar"
+    ).style.width =
+      score + "%";
+
+
+    document.getElementById(
+      "priority"
+    ).textContent =
+      priority;
+
+
+    /*
+    SHOW RESULT
+    */
+
+    const result =
+      document.getElementById("result");
+
+    result.style.display = "block";
+
+
+    /*
+    SCROLL TO RESULT
+    */
+
+    setTimeout(function(){
+
+      result.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    },100);
+
+  });
+
+
+/*
+=========================================================
+ENTER KEY SUPPORT
+=========================================================
+*/
+
+document
+  .getElementById("appName")
+  .addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+
+      document
+        .getElementById("analyzeBtn")
+        .click();
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
