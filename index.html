@@ -1,1286 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UX Recommendations</title>
+export default async function handler(req, res) {
 
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:Inter,Arial,sans-serif;
-  background:linear-gradient(135deg,#eef5ff,#f8fbff);
-  color:#172033;
-}
-
-.container{
-  width:min(1050px,92%);
-  margin:auto
-}
-
-header{
-  text-align:center;
-  padding:52px 15px 25px
-}
-
-.badge{
-  display:inline-block;
-  padding:8px 15px;
-  border-radius:30px;
-  background:#e1edff;
-  color:#2463c5;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1.5px
-}
-
-h1{
-  font-size:clamp(38px,7vw,72px);
-  margin:15px 0 8px;
-  letter-spacing:-3px
-}
-
-.subtitle{
-  color:#657084;
-  font-size:17px;
-  margin:0 auto;
-  max-width:650px
-}
-
-.search{
-  margin:25px auto 18px;
-  display:flex;
-  gap:10px;
-  max-width:650px
-}
-
-input{
-  flex:1;
-  padding:17px 20px;
-  border:1px solid #d9e1ee;
-  border-radius:14px;
-  outline:none;
-  background:white;
-  font-size:15px;
-  box-shadow:0 8px 25px #1d4ed80d
-}
-
-button{
-  border:0;
-  border-radius:14px;
-  padding:0 24px;
-  background:#2463c5;
-  color:white;
-  font-weight:800;
-  cursor:pointer;
-  transition:.2s
-}
-
-button:hover{
-  transform:translateY(-2px);
-  opacity:.92
-}
-
-.card{
-  background:rgba(255,255,255,.88);
-  border:1px solid #e1e7f0;
-  border-radius:22px;
-  padding:25px;
-  box-shadow:0 15px 45px #17345c12;
-  margin:18px 0
-}
-
-.card h2{
-  margin:0 0 5px;
-  font-size:20px
-}
-
-.small{
-  color:#788398;
-  font-size:13px;
-  margin-bottom:20px
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px
-}
-
-.problem{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-  padding:15px;
-  border:1px solid #e3e8f1;
-  border-radius:15px;
-  background:#fbfcfe;
-  cursor:pointer;
-  transition:.2s
-}
-
-.problem:hover{
-  border-color:#9abcf0;
-  background:#f5f9ff
-}
-
-.problem input{
-  flex:0;
-  width:19px;
-  height:19px;
-  margin-top:2px;
-  accent-color:#2463c5
-}
-
-.problem strong{
-  display:block;
-  font-size:14px
-}
-
-.problem span{
-  display:block;
-  color:#7a8495;
-  font-size:12px;
-  margin-top:4px
-}
-
-.actions{
-  text-align:center;
-  margin:25px 0 10px
-}
-
-#result{
-  display:none
-}
-
-.result-item{
-  border-left:4px solid #2463c5;
-  background:#f7faff;
-  border-radius:12px;
-  padding:17px 18px;
-  margin:12px 0
-}
-
-.result-item h3{
-  margin:0 0 7px;
-  font-size:15px
-}
-
-.result-item p{
-  margin:0;
-  color:#606b7c;
-  line-height:1.6;
-  font-size:14px
-}
-
-.score{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  margin-top:18px
-}
-
-.scorebar{
-  height:9px;
-  background:#e6ebf3;
-  border-radius:20px;
-  flex:1;
-  overflow:hidden
-}
-
-.scorebar i{
-  display:block;
-  height:100%;
-  width:8%;
-  background:#2463c5;
-  border-radius:20px;
-  transition:width .4s ease
-}
-
-footer{
-  text-align:center;
-  color:#8993a4;
-  font-size:12px;
-  padding:30px
-}
-
-.result-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  padding-bottom:18px;
-  margin-bottom:18px;
-  border-bottom:1px solid #e6ebf2
-}
-
-.context-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:#edf4ff;
-  color:#2463c5;
-  font-size:12px;
-  font-weight:800
-}
-
-.analysis-summary{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-bottom:18px
-}
-
-.summary-box{
-  padding:15px;
-  border:1px solid #e3e8f1;
-  border-radius:15px;
-  background:#fbfcfe
-}
-
-.summary-box span{
-  display:block;
-  color:#7b8697;
-  font-size:11px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.7px
-}
-
-.summary-box strong{
-  display:block;
-  font-size:20px;
-  margin-top:5px
-}
-
-@media(max-width:700px){
-
-  .grid{
-    grid-template-columns:1fr
+  // Only POST requests are allowed
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
-  .search{
-    flex-direction:column
-  }
-
-  button{
-    height:50px
-  }
-
-  h1{
-    letter-spacing:-2px
-  }
-
-  .analysis-summary{
-    grid-template-columns:1fr
-  }
-
-  .result-header{
-    align-items:flex-start;
-    flex-direction:column
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="container">
-
-  <span class="badge">
-    B.Sc. COMPUTER SCIENCE • FIELD PROJECT
-  </span>
-
-  <h1>UX Recommendations</h1>
-
-  <p class="subtitle">
-    Identify common application usability problems and get
-    practical AI-powered recommendations to improve the user experience.
-  </p>
-
-  <div class="search">
-
-    <input
-      id="appName"
-      placeholder="Enter application / website name"
-    >
-
-    <button onclick="startEvaluation()">
-      Analyze UX
-    </button>
-
-  </div>
-
-  <div
-    id="nameError"
-    style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;"
-  >
-    Please enter application / website name.
-  </div>
-
-  <div
-    id="invalidApp"
-    style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;"
-  >
-    Application not recognized. Please enter a supported application name.
-  </div>
-
-</header>
-
-
-<main class="container">
-
-<section
-  class="card"
-  id="problemCard"
-  style="display:none"
->
-
-  <h2>Select UX Problems</h2>
-
-  <div class="small">
-    Tick every problem observed during your field survey or application evaluation.
-  </div>
-
-  <div
-    class="grid"
-    id="problems"
-  ></div>
-
-  <div class="actions">
-
-    <button onclick="analyze()">
-      Get AI Recommendations
-    </button>
-
-  </div>
-
-</section>
-
-
-<section
-  class="card"
-  id="result"
->
-
-  <div class="result-header">
-
-    <div>
-
-      <h2 id="resultTitle">
-        UX Analysis
-      </h2>
-
-      <div
-        class="small"
-        id="resultSub"
-        style="margin:5px 0 0"
-      ></div>
-
-    </div>
-
-    <div class="context-pill">
-      ✦
-      <span id="contextType">
-        General Application
-      </span>
-    </div>
-
-  </div>
-
-
-  <div class="analysis-summary">
-
-    <div class="summary-box">
-      <span>Issues Found</span>
-      <strong id="issueCount">0</strong>
-    </div>
-
-    <div class="summary-box">
-      <span>Priority</span>
-      <strong id="summaryPriority">Low</strong>
-    </div>
-
-    <div class="summary-box">
-      <span>UX Focus</span>
-      <strong id="focusText">Usability</strong>
-    </div>
-
-  </div>
-
-
-  <div id="recommendations"></div>
-
-
-  <div class="score">
-
-    <strong>Overall UX Priority</strong>
-
-    <div class="scorebar">
-      <i id="bar"></i>
-    </div>
-
-    <strong id="priority">
-      Low
-    </strong>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-  UX Recommendations • Application Usability & User Experience Evaluation
-</footer>
-
-
-<script>
-
-const data = [
-
-[
-"navigation",
-"Difficult Navigation",
-"Users struggle to find pages or important options.",
-"Improve navigation with clear labels, logical grouping, and a consistent structure."
-],
-
-[
-"interface",
-"Confusing Interface",
-"The interface is difficult to understand at first use.",
-"Simplify the interface and create a clear visual hierarchy."
-],
-
-[
-"buttons",
-"Unclear Buttons",
-"Buttons or actions are difficult to identify.",
-"Use descriptive action labels, consistent button styles and clear interaction states."
-],
-
-[
-"colors",
-"Poor Color Combination",
-"Colors reduce readability or make important information unclear.",
-"Use a consistent palette with sufficient contrast."
-],
-
-[
-"loading",
-"Slow Loading",
-"Users have to wait too long for pages or content.",
-"Optimize images and assets and provide clear loading feedback."
-],
-
-[
-"errors",
-"Poor Error Messages",
-"Users do not understand what went wrong.",
-"Show specific friendly messages and explain how the user can recover."
-],
-
-[
-"login",
-"Difficult Login / Signup",
-"The login or registration process has unnecessary friction.",
-"Reduce unnecessary fields and provide clear validation."
-],
-
-[
-"mobile",
-"Poor Mobile Responsiveness",
-"The application is difficult to use on phones.",
-"Use responsive layouts and touch-friendly controls."
-],
-
-[
-"accessibility",
-"Accessibility Issues",
-"Some users may have difficulty accessing the interface.",
-"Improve contrast, keyboard access, labels and focus states."
-],
-
-[
-"steps",
-"Too Many Steps",
-"Users need too many actions to complete a common task.",
-"Simplify the task flow and remove redundant steps."
-],
-
-[
-"content",
-"Unclear Content",
-"Text or information is difficult to understand.",
-"Use concise language, meaningful headings and clear instructions."
-],
-
-[
-"feedback",
-"Lack of User Feedback",
-"Users are unsure whether their action was successful.",
-"Provide immediate feedback such as success messages and confirmation states."
-]
-
-];
-
-
-const box = document.getElementById("problems");
-
-
-data.forEach((x,i)=>{
-
-  box.innerHTML += `
-
-    <label class="problem">
-
-      <input
-        type="checkbox"
-        value="${i}"
-      >
-
-      <div>
-
-        <strong>${x[1]}</strong>
-
-        <span>${x[2]}</span>
-
-      </div>
-
-    </label>
-
-  `;
-
-});
-
-
-/* ------------------------------
-   VALID APPLICATIONS
--------------------------------- */
-
-const validApplications = [
-
-"instagram",
-"facebook",
-"snapchat",
-"tiktok",
-"x",
-"twitter",
-"linkedin",
-"reddit",
-"discord",
-
-"amazon",
-"flipkart",
-"myntra",
-"meesho",
-"ebay",
-"ajio",
-"nykaa",
-"shopify",
-
-"whatsapp",
-"telegram",
-"messenger",
-"signal",
-"slack",
-
-"youtube",
-"netflix",
-"spotify",
-"prime video",
-"hotstar",
-"jio cinema",
-"soundcloud",
-
-"google",
-"gmail",
-"google maps",
-"maps",
-"google drive",
-"google docs",
-"google sheets",
-"google meet",
-"google chrome",
-"chrome",
-"google calendar",
-
-"microsoft teams",
-"microsoft word",
-"microsoft excel",
-"microsoft powerpoint",
-"outlook",
-"onedrive",
-"zoom",
-
-"phonepe",
-"paytm",
-"google pay",
-"zomato",
-"swiggy",
-"uber",
-"ola",
-"makemytrip",
-"airbnb",
-
-"canva",
-"coursera",
-"udemy",
-"duolingo",
-"chatgpt"
-
-];
-
-
-function normalizeAppName(value){
-
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g," ");
-
-}
-
-
-function isValidApplication(name){
-
-  const normalized =
-    normalizeAppName(name);
-
-  return validApplications.includes(normalized);
-
-}
-
-
-/* ------------------------------
-   APPLICATION CONTEXT
--------------------------------- */
-
-const categoryAliases = {
-
-"Social Media":[
-"instagram",
-"facebook",
-"snapchat",
-"tiktok",
-"x",
-"twitter",
-"linkedin",
-"reddit",
-"discord"
-],
-
-"E-commerce":[
-"amazon",
-"flipkart",
-"myntra",
-"meesho",
-"ebay",
-"ajio",
-"nykaa",
-"shopify"
-],
-
-"Messaging":[
-"whatsapp",
-"telegram",
-"messenger",
-"signal",
-"slack"
-],
-
-"Media / Content":[
-"youtube",
-"netflix",
-"spotify",
-"prime video",
-"hotstar",
-"jio cinema",
-"soundcloud"
-],
-
-"Productivity":[
-"google",
-"gmail",
-"google maps",
-"maps",
-"google drive",
-"google docs",
-"google sheets",
-"google meet",
-"google chrome",
-"chrome",
-"google calendar",
-"microsoft teams",
-"microsoft word",
-"microsoft excel",
-"microsoft powerpoint",
-"outlook",
-"onedrive",
-"zoom"
-],
-
-"Payments / Services":[
-"phonepe",
-"paytm",
-"google pay",
-"zomato",
-"swiggy",
-"uber",
-"ola",
-"makemytrip",
-"airbnb"
-],
-
-"Design / Learning":[
-"canva",
-"coursera",
-"udemy",
-"duolingo",
-"chatgpt"
-]
-
-};
-
-
-function getContext(name){
-
-  const lower =
-    normalizeAppName(name);
-
-  for(
-    const [type,keys]
-    of Object.entries(categoryAliases)
-  ){
-
-    if(
-      keys.some(
-        k => lower === k
-      )
-    ){
-
-      return {
-        type:type
-      };
-
+  try {
+
+    const { application, problems = [] } = req.body || {};
+
+    // Check application name
+    if (!application) {
+      return res.status(400).json({
+        error: "Application name is required"
+      });
     }
 
-  }
+    // Get Gemini API key from Vercel Environment Variables
+    const apiKey = process.env.GEMINI_API_KEY;
 
-  return {
-    type:"General Application"
-  };
+    if (!apiKey) {
+      return res.status(500).json({
+        error: "Gemini API key is not configured in Vercel."
+      });
+    }
 
+    // Convert selected problems into readable text
+    const problemText =
+      problems.length > 0
+        ? problems.join(", ")
+        : "No specific UX problems selected";
+
+    // Professional UX prompt
+    const prompt = `
+You are a professional UX/UI analyst helping with a B.Sc. Computer Science field project.
+
+Analyze this application:
+
+Application: ${application}
+
+Observed UX problems:
+${problemText}
+
+Generate professional, practical and application-specific UX recommendations.
+
+IMPORTANT RULES:
+
+1. Focus only on the selected UX problems.
+2. Do not invent features that the application definitely does not have.
+3. Recommendations must be realistic and useful.
+4. Use simple professional English.
+5. Do not mention developers, programmers or code.
+6. Do not mention that you are an AI.
+7. Do not include the application's owner, creator, developer or person's name.
+8. Do not give generic recommendations if an application-specific recommendation is possible.
+9. Return exactly 3 to 6 recommendations.
+10. Return ONLY valid JSON.
+
+Return this exact structure:
+
+{
+  "summary": "Short professional UX analysis summary",
+  "uxScore": 0,
+  "category": "Application category",
+  "priority": "High",
+  "recommendations": [
+    {
+      "problem": "UX problem",
+      "severity": "High",
+      "recommendation": "Specific practical recommendation",
+      "reason": "Why this improves the user experience"
+    }
+  ]
 }
 
-
-/* ------------------------------
-   INPUT VALIDATION
--------------------------------- */
-
-document
-.getElementById("appName")
-.addEventListener(
-"input",
-function(){
-
-  if(this.value.trim()){
-
-    document
-    .getElementById("nameError")
-    .style.display="none";
-
-    document
-    .getElementById("invalidApp")
-    .style.display="none";
-
-  }
-
-});
-
-
-/* ------------------------------
-   START EVALUATION
--------------------------------- */
-
-function startEvaluation(){
-
-  const input =
-    document.getElementById("appName");
-
-  const name =
-    input.value.trim();
-
-  const error =
-    document.getElementById("nameError");
-
-  const invalid =
-    document.getElementById("invalidApp");
-
-  const problemCard =
-    document.getElementById("problemCard");
-
-  const result =
-    document.getElementById("result");
-
-
-  if(!name){
-
-    error.style.display="block";
-
-    invalid.style.display="none";
-
-    problemCard.style.display="none";
-
-    result.style.display="none";
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  if(!isValidApplication(name)){
-
-    error.style.display="none";
-
-    invalid.style.display="block";
-
-    problemCard.style.display="none";
-
-    result.style.display="none";
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  error.style.display="none";
-
-  invalid.style.display="none";
-
-  problemCard.style.display="block";
-
-  result.style.display="none";
-
-  problemCard.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
-}
-
-
-/* ------------------------------
-   AI ANALYSIS
--------------------------------- */
-
-async function analyze(){
-
-  const input =
-    document.getElementById("appName");
-
-  const name =
-    input.value.trim();
-
-  const error =
-    document.getElementById("nameError");
-
-  const invalid =
-    document.getElementById("invalidApp");
-
-  const result =
-    document.getElementById("result");
-
-  const problemCard =
-    document.getElementById("problemCard");
-
-  const rec =
-    document.getElementById("recommendations");
-
-
-  /* Validate application */
-
-  if(!name){
-
-    error.style.display="block";
-
-    invalid.style.display="none";
-
-    result.style.display="none";
-
-    problemCard.style.display="none";
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  if(!isValidApplication(name)){
-
-    error.style.display="none";
-
-    invalid.style.display="block";
-
-    result.style.display="none";
-
-    problemCard.style.display="none";
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  error.style.display="none";
-
-  invalid.style.display="none";
-
-
-  /* Get selected problems */
-
-  const selected =
-    [
-      ...document.querySelectorAll(
-        ".problem input:checked"
-      )
-    ]
-    .map(
-      checkbox => data[
-        Number(checkbox.value)
-      ][0]
+Rules for uxScore:
+- Must be a number between 0 and 100.
+- Higher score means better UX.
+- Base the score on the number and seriousness of selected problems.
+
+Priority must be exactly one of:
+High
+Medium
+Low
+
+Severity must be exactly one of:
+High
+Medium
+Low
+`;
+
+    // Gemini API request
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: prompt
+                }
+              ]
+            }
+          ],
+
+          generationConfig: {
+            responseMimeType: "application/json",
+            temperature: 0.4,
+            maxOutputTokens: 2000
+          }
+        })
+      }
     );
 
+    // Read Gemini response
+    const data = await response.json();
 
-  /* Application context */
+    // IMPORTANT:
+    // Return the real Gemini error instead of hiding it.
+    if (!response.ok) {
 
-  const context =
-    getContext(name);
+      console.error("Gemini API error:", data);
 
-
-  /* Priority */
-
-  const priorityLevel =
-    selected.length >= 7
-      ? "High"
-      : selected.length >= 4
-        ? "Medium"
-        : "Low";
-
-
-  /* Update summary */
-
-  document
-  .getElementById("resultTitle")
-  .textContent =
-    name + " — AI UX Analysis";
-
-
-  document
-  .getElementById("contextType")
-  .textContent =
-    context.type;
-
-
-  document
-  .getElementById("issueCount")
-  .textContent =
-    selected.length;
-
-
-  document
-  .getElementById("summaryPriority")
-  .textContent =
-    priorityLevel;
-
-
-  document
-  .getElementById("resultSub")
-  .textContent =
-    selected.length
-      ? selected.length +
-        " UX problem(s) selected from the evaluation checklist."
-      : "No problem selected yet. Select the issues observed in your survey.";
-
-
-  document
-  .getElementById("focusText")
-  .textContent =
-    selected.length
-      ? data[
-          Number(
-            document.querySelector(
-              ".problem input:checked"
-            ).value
-          )
-        ][1]
-      : "Usability";
-
-
-  /* Show loading state */
-
-  rec.innerHTML = `
-
-    <div class="result-item">
-
-      <h3>
-        Generating AI Recommendations...
-      </h3>
-
-      <p>
-        Gemini AI is analysing the selected UX problems.
-      </p>
-
-    </div>
-
-  `;
-
-
-  /* Priority bar */
-
-  const width =
-    selected.length
-      ? Math.min(
-          100,
-          selected.length / 8 * 100
-        )
-      : 8;
-
-
-  document
-  .getElementById("priority")
-  .textContent =
-    priorityLevel;
-
-
-  document
-  .getElementById("bar")
-  .style.width =
-    width + "%";
-
-
-  result.style.display="block";
-
-
-  result.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
-
-  /* ------------------------------
-     CALL VERCEL GEMINI API
-  -------------------------------- */
-
-  try{
-
-    const response =
-      await fetch(
-        "/api/recommend",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-
-            application:name,
-
-            problems:selected
-
-          })
-
-        }
-      );
-
-
-    let aiData;
-
-
-    try{
-
-      aiData =
-        await response.json();
-
-    }
-    catch{
-
-      throw new Error(
-        "Invalid response received from AI API."
-      );
-
+      return res.status(response.status).json({
+        error:
+          data?.error?.message ||
+          data?.error?.status ||
+          "Gemini API request failed"
+      });
     }
 
+    // Extract generated text
+    const text =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    if(!response.ok){
+    if (!text) {
 
-      throw new Error(
-        aiData.error ||
-        "AI request failed."
-      );
+      console.error("Empty Gemini response:", data);
 
+      return res.status(500).json({
+        error: "Gemini returned an empty response."
+      });
     }
 
+    // Convert Gemini JSON text into JavaScript object
+    let result;
 
-    /* Clear loading */
+    try {
 
-    rec.innerHTML="";
+      result = JSON.parse(text);
 
+    } catch (parseError) {
 
-    /* ------------------------------
-       DISPLAY AI RESULTS
-    -------------------------------- */
+      console.error("JSON parse error:", parseError);
+      console.error("Gemini text:", text);
 
-    if(
-      aiData.recommendations &&
-      aiData.recommendations.length
-    ){
-
-      aiData.recommendations
-      .forEach(
-        (item,index)=>{
-
-          const div =
-            document.createElement(
-              "div"
-            );
-
-
-          div.className =
-            "result-item";
-
-
-          const title =
-            item.title ||
-            item.problem ||
-            ("UX Recommendation " +
-             (index + 1));
-
-
-          const description =
-            item.description ||
-            item.recommendation ||
-            item.text ||
-            "AI recommendation generated successfully.";
-
-
-          div.innerHTML = `
-
-            <h3>
-              ${title}
-            </h3>
-
-            <p>
-              ${description}
-            </p>
-
-          `;
-
-
-          rec.appendChild(div);
-
-        }
-      );
-
+      return res.status(500).json({
+        error: "Gemini returned an invalid JSON response."
+      });
     }
 
-    else if(aiData.text){
+    // Make sure recommendations exist
+    if (
+      !result.recommendations ||
+      !Array.isArray(result.recommendations)
+    ) {
 
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "result-item";
-
-
-      div.innerHTML = `
-
-        <h3>
-          AI UX Recommendation
-        </h3>
-
-        <p>
-          ${aiData.text}
-        </p>
-
-      `;
-
-
-      rec.appendChild(div);
-
+      return res.status(500).json({
+        error: "Gemini response did not contain recommendations."
+      });
     }
 
-    else{
+    // Send successful result to frontend
+    return res.status(200).json(result);
 
-      rec.innerHTML = `
+  } catch (error) {
 
-        <div class="result-item">
+    console.error("Server error:", error);
 
-          <h3>
-            No recommendations generated
-          </h3>
-
-          <p>
-            Try selecting one or more UX problems.
-          </p>
-
-        </div>
-
-      `;
-
-    }
-
-
+    return res.status(500).json({
+      error:
+        error?.message ||
+        "Something went wrong while generating recommendations."
+    });
   }
-
-  catch(error){
-
-    console.error(
-      "AI Recommendation Error:",
-      error
-    );
-
-
-    rec.innerHTML = `
-
-      <div class="result-item">
-
-        <h3>
-          AI Recommendation Error
-        </h3>
-
-        <p>
-          ${error.message}
-        </p>
-
-      </div>
-
-    `;
-
-  }
-
 }
-
-</script>
-
-</body>
-</html>
