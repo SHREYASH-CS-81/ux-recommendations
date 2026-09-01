@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX Recommendations</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(135deg,#eef5ff,#f8fbff);
+  color:#172033;
+}
+.container{width:min(1050px,92%);margin:auto}
+header{text-align:center;padding:52px 15px 25px}
+.badge{
+  display:inline-block;padding:8px 15px;border-radius:30px;
+  background:#e1edff;color:#2463c5;font-size:12px;font-weight:800;
+  letter-spacing:1.5px
+}
+h1{font-size:clamp(38px,7vw,72px);margin:15px 0 8px;letter-spacing:-3px}
+.subtitle{color:#657084;font-size:17px;margin:0 auto;max-width:650px}
+.search{
+  margin:25px auto 18px;display:flex;gap:10px;max-width:650px
+}
+input{
+  flex:1;padding:17px 20px;border:1px solid #d9e1ee;border-radius:14px;
+  outline:none;background:white;font-size:15px;box-shadow:0 8px 25px #1d4ed80d
+}
+button{
+  border:0;border-radius:14px;padding:0 24px;background:#2463c5;color:white;
+  font-weight:800;cursor:pointer;transition:.2s
+}
+button:hover{transform:translateY(-2px);opacity:.92}
+.card{
+  background:rgba(255,255,255,.88);border:1px solid #e1e7f0;
+  border-radius:22px;padding:25px;box-shadow:0 15px 45px #17345c12;
+  margin:18px 0
+}
+.card h2{margin:0 0 5px;font-size:20px}
+.small{color:#788398;font-size:13px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.problem{
+  display:flex;align-items:flex-start;gap:12px;padding:15px;
+  border:1px solid #e3e8f1;border-radius:15px;background:#fbfcfe;
+  cursor:pointer;transition:.2s
+}
+.problem:hover{border-color:#9abcf0;background:#f5f9ff}
+.problem input{flex:0;width:19px;height:19px;margin-top:2px;accent-color:#2463c5}
+.problem strong{display:block;font-size:14px}
+.problem span{display:block;color:#7a8495;font-size:12px;margin-top:4px}
+.actions{text-align:center;margin:25px 0 10px}
+#result{display:none}
+.result-item{
+  border-left:4px solid #2463c5;background:#f7faff;border-radius:12px;
+  padding:17px 18px;margin:12px 0
+}
+.result-item h3{margin:0 0 7px;font-size:15px}
+.result-item p{margin:0;color:#606b7c;line-height:1.6;font-size:14px}
+.score{
+  display:flex;gap:12px;align-items:center;margin-top:18px
+}
+.scorebar{height:9px;background:#e6ebf3;border-radius:20px;flex:1;overflow:hidden}
+.scorebar i{display:block;height:100%;width:78%;background:#2463c5;border-radius:20px}
+footer{text-align:center;color:#8993a4;font-size:12px;padding:30px}
+@media(max-width:700px){
+ .grid{grid-template-columns:1fr}
+ .search{flex-direction:column}
+ button{height:50px}
+ h1{letter-spacing:-2px}
+}
+
+.result-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid #e6ebf2}
+.context-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#edf4ff;color:#2463c5;font-size:12px;font-weight:800}
+.analysis-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.summary-box{padding:15px;border:1px solid #e3e8f1;border-radius:15px;background:#fbfcfe}
+.summary-box span{display:block;color:#7b8697;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+.summary-box strong{display:block;font-size:20px;margin-top:5px}
+.prof-result{position:relative;border:1px solid #e1e7f0;border-radius:18px;background:white;padding:20px;margin:14px 0;overflow:hidden}
+.prof-result:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#2463c5}
+.result-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.result-number{width:30px;height:30px;border-radius:9px;background:#eef4ff;color:#2463c5;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}
+.priority{display:inline-flex;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900}
+.priority.high{background:#fff0f0;color:#c43d3d}.priority.medium{background:#fff8e8;color:#a76b00}.priority.low{background:#edf8f0;color:#287c48}
+.result-top h3{margin:0 0 0 10px;font-size:16px;flex:1}
+.result-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:900;color:#8792a4;margin-top:17px}
+.result-text{margin:6px 0 0;color:#4f5b6d;font-size:14px;line-height:1.65}
+.action-box{margin-top:13px;padding:13px 14px;background:#f7faff;border-radius:12px}
+.action-box strong{font-size:13px}.action-box ul{margin:7px 0 0;padding-left:19px;color:#5e6979;font-size:13px;line-height:1.6}
+@media(max-width:700px){.analysis-summary{grid-template-columns:1fr}.result-header{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="container">
+  <span class="badge">B.Sc. COMPUTER SCIENCE • FIELD PROJECT</span>
+  <h1>UX Recommendations</h1>
+  <p class="subtitle">Identify common application usability problems and get practical recommendations to improve the user experience.</p>
+  <div class="search">
+    <input id="appName" placeholder="Enter application / website name">
+    <button onclick="startEvaluation()">Analyze UX</button>
+  </div>
+  <div id="nameError" style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;">
+    Please enter application / website name.
+  </div>
+  <div id="invalidApp" style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;">
+    Application not recognized. Please enter a supported application name.
+  </div>
+</header>
+
+<main class="container">
+<section class="card" id="problemCard" style="display:none">
+  <h2>Select UX Problems</h2>
+  <div class="small">Tick every problem observed during your field survey or application evaluation.</div>
+  <div class="grid" id="problems"></div>
+  <div class="actions">
+    <button onclick="analyze()">Get Recommendations</button>
+  </div>
+</section>
+
+<section class="card" id="result">
+  <div class="result-header">
+    <div><h2 id="resultTitle">UX Analysis</h2><div class="small" id="resultSub" style="margin:5px 0 0"></div></div>
+    <div class="context-pill">✦ <span id="contextType">General Application</span></div>
+  </div>
+  <div class="analysis-summary">
+    <div class="summary-box"><span>Issues Found</span><strong id="issueCount">0</strong></div>
+    <div class="summary-box"><span>Priority</span><strong id="summaryPriority">Low</strong></div>
+    <div class="summary-box"><span>UX Focus</span><strong id="focusText">Usability</strong></div>
+  </div>
+  <div id="recommendations"></div>
+  <div class="score"><strong>Overall UX Priority</strong><div class="scorebar"><i id="bar"></i></div><strong id="priority">Low</strong></div>
+</section>
+</main>
+
+<footer>UX Recommendations • Application Usability & User Experience Evaluation</footer>
+
+<script>
+const data = [
+ ["navigation","Difficult Navigation","Users struggle to find pages or important options.",
+  "Improve navigation with clear labels, logical grouping, and a consistent structure. Keep the most important actions easy to reach."],
+ ["interface","Confusing Interface","The interface is difficult to understand at first use.",
+  "Simplify the interface, reduce unnecessary elements, and create a clear visual hierarchy so users know what to do next."],
+ ["buttons","Unclear Buttons","Buttons or actions are difficult to identify.",
+  "Use descriptive action labels, consistent button styles, adequate spacing, and clear interaction states."],
+ ["colors","Poor Color Combination","Colors reduce readability or make important information unclear.",
+  "Use a consistent palette with sufficient contrast and reserve accent colors for important actions and feedback."],
+ ["loading","Slow Loading","Users have to wait too long for pages or content.",
+  "Optimize images and assets, reduce unnecessary requests, and provide clear loading feedback."],
+ ["errors","Poor Error Messages","Users do not understand what went wrong or how to fix it.",
+  "Show a specific, friendly message near the affected action and explain how the user can recover."],
+ ["login","Difficult Login / Signup","The login or registration process has unnecessary friction.",
+  "Reduce unnecessary fields, provide clear validation, explain requirements, and give immediate submission feedback."],
+ ["mobile","Poor Mobile Responsiveness","The application is difficult to use on phones or small screens.",
+  "Use responsive layouts, touch-friendly controls, readable text, and test important flows on different screen sizes."],
+ ["accessibility","Accessibility Issues","Some users may have difficulty accessing or understanding the interface.",
+  "Improve contrast, keyboard access, labels, focus states, text alternatives, and other accessibility fundamentals."],
+ ["steps","Too Many Steps","Users need too many actions to complete a common task.",
+  "Simplify the task flow, remove redundant screens, combine related steps where appropriate, and show progress for longer tasks."],
+ ["content","Unclear Content","Text, instructions, or information is difficult to understand.",
+  "Use concise language, meaningful headings, short sections, helpful labels, and place guidance close to the relevant action."],
+ ["feedback","Lack of User Feedback","Users are unsure whether their action was successful.",
+  "Provide immediate feedback such as success messages, progress indicators, confirmation states, and inline validation."]
+];
+
+const box=document.getElementById("problems");
+data.forEach((x,i)=>{
+ box.innerHTML += `<label class="problem">
+   <input type="checkbox" value="${i}">
+   <div><strong>${x[1]}</strong><span>${x[2]}</span></div>
+ </label>`;
+});
+
+document.getElementById("appName").addEventListener("input", function(){
+  if(this.value.trim()){
+    document.getElementById("nameError").style.display="none";
+    document.getElementById("invalidApp").style.display="none";
+  }
+});
+
+function startEvaluation(){
+ const input=document.getElementById("appName");
+ const name=input.value.trim();
+ const error=document.getElementById("nameError");
+ const invalid=document.getElementById("invalidApp");
+ const problemCard=document.getElementById("problemCard");
+ const result=document.getElementById("result");
+
+ if(!name){
+   error.style.display="block";
+   invalid.style.display="none";
+   problemCard.style.display="none";
+   result.style.display="none";
+   input.focus();
+   return;
+ }
+
+ if(!isValidApplication(name)){
+   error.style.display="none";
+   invalid.style.display="block";
+   problemCard.style.display="none";
+   result.style.display="none";
+   input.focus();
+   return;
+ }
+
+ error.style.display="none";
+ invalid.style.display="none";
+ problemCard.style.display="block";
+ result.style.display="none";
+ problemCard.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+
+const appContexts = [
+  {keys:["amazon","flipkart","myntra","meesho"], type:"E-commerce",
+   hints:{
+    navigation:"For an e-commerce app, simplify category browsing and keep Search, Cart, Orders and Account easy to access.",
+    interface:"Use clear product cards, consistent pricing/offer hierarchy, and make shopping actions visually distinct.",
+    buttons:"Use action labels such as Add to Cart, Buy Now and Apply Filter consistently so shopping actions are immediately understandable.",
+    colors:"Keep price, discount and primary shopping actions visually distinct while maintaining readable contrast.",
+    loading:"Prioritize fast loading for product images, search results and checkout, and use skeleton/loading states while content loads.",
+    errors:"During cart, payment or checkout errors, clearly explain what failed and give the user a direct recovery action.",
+    login:"Keep sign-in and checkout authentication concise, with clear validation and recovery options.",
+    mobile:"Make product browsing, filters, cart and checkout comfortable for touch interaction on small screens.",
+    accessibility:"Ensure product information, prices, filters and purchase controls are accessible and readable.",
+    steps:"Reduce unnecessary steps between product selection, cart and checkout, while showing checkout progress.",
+    content:"Present product title, price, delivery information, ratings and key specifications in a clear hierarchy.",
+    feedback:"Confirm actions such as Add to Cart, wishlist updates, order placement and payment status immediately."
+   }},
+  {keys:["instagram","facebook","snapchat","tiktok"], type:"Social Media",
+   hints:{
+    navigation:"Keep Feed, discovery, messages, notifications and profile access consistent and easy to understand.",
+    interface:"Use a predictable content hierarchy and avoid competing controls around posts, stories and media.",
+    buttons:"Make actions such as Like, Comment, Share and Save recognizable and consistent.",
+    colors:"Maintain readable text and controls across image/video content while preserving strong contrast.",
+    loading:"Use efficient media loading and placeholders so feeds and profiles feel responsive.",
+    errors:"Explain posting, upload, login or messaging failures clearly and provide a retry or recovery action.",
+    login:"Make authentication simple while keeping account recovery easy to find.",
+    mobile:"Optimize media controls, navigation and touch targets for one-handed mobile use.",
+    accessibility:"Provide meaningful labels, captions/text alternatives where appropriate, and visible focus/contrast.",
+    steps:"Reduce unnecessary steps for common actions such as posting, replying or sharing content.",
+    content:"Use clear labels and concise guidance for creation tools, settings and account controls.",
+    feedback:"Show clear feedback when content is posted, saved, shared, deleted or a message is sent."
+   }},
+  {keys:["youtube","netflix","spotify"], type:"Media / Content",
+   hints:{
+    navigation:"Make content discovery, search, library and playback controls easy to reach and consistent.",
+    interface:"Prioritize the content itself while keeping playback and discovery controls clear and uncluttered.",
+    buttons:"Use familiar, clearly labeled playback and content actions with consistent placement.",
+    colors:"Maintain readable controls over media and ensure text remains clear in different viewing conditions.",
+    loading:"Optimize thumbnails/media delivery and provide useful loading states for playback.",
+    errors:"Explain playback, network or content errors and provide a clear retry or alternative action.",
+    login:"Keep sign-in and profile switching straightforward with clear account recovery.",
+    mobile:"Make playback controls, browsing and search touch-friendly on small screens.",
+    accessibility:"Support captions, readable controls, keyboard access and sufficient contrast.",
+    steps:"Reduce friction between discovering content and starting playback or saving it.",
+    content:"Use clear titles, metadata and descriptions so users can quickly understand content.",
+    feedback:"Give immediate feedback for play, pause, save, like, download and subscription actions."
+   }},
+  {keys:["whatsapp","telegram","messenger"], type:"Messaging",
+   hints:{
+    navigation:"Keep chats, calls, contacts and settings organized with predictable navigation.",
+    interface:"Prioritize conversations and make message composition, attachments and status information easy to understand.",
+    buttons:"Use recognizable controls for send, reply, attach, call and other frequent messaging actions.",
+    colors:"Maintain clear contrast between messages, controls and status indicators.",
+    loading:"Load conversations and media efficiently and indicate when messages or media are still loading.",
+    errors:"Explain send, delivery, connection or media errors and provide an obvious retry action.",
+    login:"Make account verification and recovery clear without adding unnecessary steps.",
+    mobile:"Optimize the chat composer, attachments and navigation for touch use.",
+    accessibility:"Use accessible labels, contrast, focus states and readable message controls.",
+    steps:"Keep common actions such as replying, forwarding and sharing quick to complete.",
+    content:"Use clear labels and status information for messages, calls, privacy and settings.",
+    feedback:"Clearly indicate sending, delivered/read status and success or failure of important actions."
+   }},
+  {keys:["google maps","maps","uber","ola"], type:"Maps / Navigation",
+   hints:{
+    navigation:"Make destination search, route options, saved places and current-location controls easy to find.",
+    interface:"Keep the map visually dominant while presenting route and action controls without clutter.",
+    buttons:"Use clear actions for directions, start navigation, route selection and location sharing.",
+    colors:"Use strong contrast and avoid color-only communication for route or status information.",
+    loading:"Load maps and route data efficiently and clearly indicate when routing is still being calculated.",
+    errors:"Explain GPS, route or network problems and give the user a practical recovery option.",
+    login:"Keep account access simple and avoid blocking basic navigation unnecessarily.",
+    mobile:"Make map controls and navigation actions touch-friendly and easy to reach.",
+    accessibility:"Support readable labels, contrast, alternative ways to understand route information and accessible controls.",
+    steps:"Reduce unnecessary steps from destination search to starting navigation.",
+    content:"Present distance, time, route changes and important place information clearly.",
+    feedback:"Provide clear confirmation when a route starts, changes, is saved or is shared."
+   }}
+];
+
+
+// Recognized applications for the project.
+// Names are normalized so common capitalization/spaces are accepted.
+const validApplications = [
+  // Social Media
+  "instagram","facebook","snapchat","tiktok","x","twitter","linkedin","reddit","discord",
+  // E-commerce
+  "amazon","flipkart","myntra","meesho","ebay","ajio","nykaa","shopify",
+  // Messaging
+  "whatsapp","telegram","messenger","signal","slack",
+  // Media / Content
+  "youtube","netflix","spotify","prime video","hotstar","jio cinema","soundcloud",
+  // Google / Productivity
+  "google","gmail","google maps","maps","google drive","google docs","google sheets",
+  "google meet","google chrome","chrome","google calendar",
+  // Microsoft / Work
+  "microsoft teams","microsoft word","microsoft excel","microsoft powerpoint","outlook",
+  "onedrive","zoom",
+  // Payments / Food / Travel
+  "phonepe","paytm","google pay","zomato","swiggy","uber","ola","makemytrip","airbnb",
+  // Design / Learning
+  "canva","coursera","udemy","duolingo","chatgpt"
+];
+
+function normalizeAppName(value){
+  return value.toLowerCase().trim().replace(/\s+/g," ");
+}
+
+function isValidApplication(name){
+  const normalized=normalizeAppName(name);
+  return validApplications.includes(normalized);
+}
+
+const categoryAliases = {
+  "Social Media":["instagram","facebook","snapchat","tiktok","x","twitter","linkedin","reddit","discord"],
+  "E-commerce":["amazon","flipkart","myntra","meesho","ebay","ajio","nykaa","shopify"],
+  "Messaging":["whatsapp","telegram","messenger","signal","slack"],
+  "Media / Content":["youtube","netflix","spotify","prime video","hotstar","jio cinema","soundcloud"],
+  "Productivity":["google","gmail","google maps","maps","google drive","google docs","google sheets","google meet","google chrome","chrome","google calendar","microsoft teams","microsoft word","microsoft excel","microsoft powerpoint","outlook","onedrive","zoom"],
+  "Payments / Services":["phonepe","paytm","google pay","zomato","swiggy","uber","ola","makemytrip","airbnb"],
+  "Design / Learning":["canva","coursera","udemy","duolingo","chatgpt"]
+};
+
+function getContext(name){
+  const lower=name.toLowerCase();
+  const exact=appContexts.find(c=>c.keys.some(k=>lower.includes(k)));
+  if(exact) return exact;
+  for(const [type,keys] of Object.entries(categoryAliases)){
+    if(keys.some(k=>lower===k || lower.includes(k))) return {type,hints:{}};
+  }
+  return {type:"General Application",hints:{}};
+}
+
+function getRecommendation(name, item){
+  const context=getContext(name);
+  const custom=context.hints[item[0]];
+  return {
+    type:context.type,
+    text:custom || `${item[3]} Apply this specifically to the ${context.type.toLowerCase()} experience of "${name}".`
+  };
+}
+
+function analyze(){
+ const input=document.getElementById("appName");
+ const name=input.value.trim();
+ const error=document.getElementById("nameError");
+ const invalid=document.getElementById("invalidApp");
+ const result=document.getElementById("result");
+
+ // Do not show any output until a recognized application is entered.
+ if(!name){
+   error.style.display="block";
+   invalid.style.display="none";
+   result.style.display="none";
+   document.getElementById("problemCard").style.display="none";
+   input.focus();
+   return;
+ }
+
+ if(!isValidApplication(name)){
+   error.style.display="none";
+   invalid.style.display="block";
+   result.style.display="none";
+   document.getElementById("problemCard").style.display="none";
+   input.focus();
+   return;
+ }
+
+ error.style.display="none";
+ invalid.style.display="none";
+ document.getElementById("problemCard").style.display="block";
+
+ const selected=[...document.querySelectorAll('.problem input:checked')].map(x=>+x.value);
+ const rec=document.getElementById("recommendations");
+ document.getElementById("resultTitle").textContent=name+" — UX Analysis";
+ const context=getContext(name);
+ const priorityLevel=selected.length>=7?"High":selected.length>=4?"Medium":"Low";
+ document.getElementById("resultSub").textContent=selected.length
+   ? selected.length+" UX problem(s) selected from the evaluation checklist."
+   : "No problem selected yet. Select the issues observed in your survey.";
+ document.getElementById("contextType").textContent=context.type;
+ document.getElementById("issueCount").textContent=selected.length;
+ document.getElementById("summaryPriority").textContent=priorityLevel;
+ document.getElementById("focusText").textContent=selected.length ? data[selected[0]][1].replace(" Issues","") : "Usability";
+
+ rec.innerHTML="";
+ if(!selected.length){
+   rec.innerHTML='<div class="result-item"><h3>Start the evaluation</h3><p>Select one or more UX problems above to generate project-based recommendations.</p></div>';
+ } else {
+   selected.forEach(i=>{
+    rec.innerHTML += `<div class="result-item"><h3>${data[i][1]}</h3><p>${data[i][3]}</p></div>`;
+   });
+ }
+ const level=selected.length>=7?"High":selected.length>=4?"Medium":"Low";
+ const width=selected.length ? Math.min(100,selected.length/8*100) : 8;
+ document.getElementById("priority").textContent=level;
+ document.getElementById("bar").style.width=width+"%";
+ result.style.display="block";
+ result.scrollIntoView({behavior:"smooth",block:"start"});
+}
+</script>
+</body>
+</html>
