@@ -20,18 +20,18 @@ body{
 }
 
 .container{
-  width:min(1050px,92%);
+  width:min(1100px,92%);
   margin:auto;
 }
 
 header{
   text-align:center;
-  padding:52px 15px 25px;
+  padding:55px 15px 30px;
 }
 
 .badge{
   display:inline-block;
-  padding:8px 15px;
+  padding:8px 16px;
   border-radius:30px;
   background:#e1edff;
   color:#2463c5;
@@ -41,23 +41,25 @@ header{
 }
 
 h1{
-  font-size:clamp(38px,7vw,72px);
-  margin:15px 0 8px;
+  font-size:clamp(42px,7vw,72px);
+  margin:16px 0 10px;
   letter-spacing:-3px;
+  line-height:1;
 }
 
 .subtitle{
   color:#657084;
   font-size:17px;
+  line-height:1.6;
   margin:0 auto;
-  max-width:650px;
+  max-width:700px;
 }
 
 .search{
-  margin:25px auto 18px;
+  margin:28px auto 15px;
   display:flex;
   gap:10px;
-  max-width:650px;
+  max-width:700px;
 }
 
 .search input{
@@ -68,13 +70,19 @@ h1{
   outline:none;
   background:white;
   font-size:15px;
-  box-shadow:0 8px 25px #1d4ed80d;
+  box-shadow:0 8px 25px rgba(29,78,216,.05);
+}
+
+.search input:focus{
+  border-color:#2463c5;
+  box-shadow:0 0 0 4px rgba(36,99,197,.10);
 }
 
 button{
   border:0;
   border-radius:14px;
-  padding:0 24px;
+  padding:0 25px;
+  min-height:52px;
   background:#2463c5;
   color:white;
   font-weight:800;
@@ -84,42 +92,64 @@ button{
 
 button:hover{
   transform:translateY(-2px);
-  opacity:.92;
+  opacity:.93;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.message{
+  display:none;
+  font-size:13px;
+  font-weight:700;
+  margin-top:10px;
+}
+
+.error{
+  color:#d64545;
+}
+
+.success{
+  color:#287c48;
 }
 
 .card{
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.92);
   border:1px solid #e1e7f0;
   border-radius:22px;
-  padding:25px;
-  box-shadow:0 15px 45px #17345c12;
-  margin:18px 0;
+  padding:27px;
+  box-shadow:0 15px 45px rgba(23,52,92,.07);
+  margin:20px 0;
 }
 
 .card h2{
-  margin:0 0 5px;
-  font-size:20px;
+  margin:0 0 6px;
+  font-size:21px;
 }
 
 .small{
   color:#788398;
   font-size:13px;
   margin-bottom:20px;
+  line-height:1.5;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
+  gap:13px;
 }
 
 .problem{
   display:flex;
   align-items:flex-start;
   gap:12px;
-  padding:15px;
+  padding:17px;
   border:1px solid #e3e8f1;
-  border-radius:15px;
+  border-radius:16px;
   background:#fbfcfe;
   cursor:pointer;
   transition:.2s;
@@ -128,13 +158,16 @@ button:hover{
 .problem:hover{
   border-color:#9abcf0;
   background:#f5f9ff;
+  transform:translateY(-1px);
 }
 
 .problem input{
   width:19px;
   height:19px;
   margin-top:2px;
+  flex:none;
   accent-color:#2463c5;
+  cursor:pointer;
 }
 
 .problem strong{
@@ -146,15 +179,19 @@ button:hover{
   display:block;
   color:#7a8495;
   font-size:12px;
-  margin-top:4px;
+  margin-top:5px;
+  line-height:1.5;
 }
 
 .actions{
   text-align:center;
-  margin:25px 0 10px;
+  margin:27px 0 5px;
 }
 
-#problemCard,
+.actions button{
+  min-width:230px;
+}
+
 #result{
   display:none;
 }
@@ -163,9 +200,9 @@ button:hover{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:16px;
-  padding-bottom:18px;
-  margin-bottom:18px;
+  gap:20px;
+  padding-bottom:19px;
+  margin-bottom:20px;
   border-bottom:1px solid #e6ebf2;
 }
 
@@ -173,72 +210,180 @@ button:hover{
   display:inline-flex;
   align-items:center;
   gap:7px;
-  padding:8px 12px;
+  padding:9px 14px;
   border-radius:999px;
   background:#edf4ff;
   color:#2463c5;
   font-size:12px;
   font-weight:800;
+  white-space:nowrap;
 }
 
 .analysis-summary{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:12px;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
 .summary-box{
-  padding:15px;
+  padding:17px;
   border:1px solid #e3e8f1;
-  border-radius:15px;
+  border-radius:16px;
   background:#fbfcfe;
 }
 
 .summary-box span{
   display:block;
   color:#7b8697;
-  font-size:11px;
-  font-weight:700;
+  font-size:10px;
+  font-weight:800;
   text-transform:uppercase;
-  letter-spacing:.7px;
+  letter-spacing:.8px;
 }
 
 .summary-box strong{
   display:block;
   font-size:20px;
-  margin-top:5px;
+  margin-top:6px;
 }
 
-.result-item{
+.ai-status{
   border-left:4px solid #2463c5;
   background:#f7faff;
-  border-radius:12px;
+  border-radius:13px;
   padding:17px 18px;
-  margin:12px 0;
+  margin:15px 0;
 }
 
-.result-item h3{
+.ai-status h3{
   margin:0 0 7px;
   font-size:15px;
 }
 
-.result-item p{
+.ai-status p{
   margin:0;
   color:#606b7c;
   line-height:1.6;
   font-size:14px;
 }
 
+.result-item{
+  position:relative;
+  border:1px solid #e1e7f0;
+  border-radius:18px;
+  background:white;
+  padding:21px;
+  margin:14px 0;
+  overflow:hidden;
+}
+
+.result-item:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:#2463c5;
+}
+
+.result-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.result-number{
+  width:31px;
+  height:31px;
+  border-radius:9px;
+  background:#eef4ff;
+  color:#2463c5;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:900;
+  flex:none;
+}
+
+.result-top h3{
+  margin:0;
+  font-size:16px;
+  flex:1;
+  line-height:1.4;
+}
+
+.priority{
+  display:inline-flex;
+  padding:6px 11px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.priority.high{
+  background:#fff0f0;
+  color:#c43d3d;
+}
+
+.priority.medium{
+  background:#fff8e8;
+  color:#a76b00;
+}
+
+.priority.low{
+  background:#edf8f0;
+  color:#287c48;
+}
+
+.result-label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:900;
+  color:#8792a4;
+  margin-top:17px;
+}
+
+.result-text{
+  margin:6px 0 0;
+  color:#4f5b6d;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.action-box{
+  margin-top:14px;
+  padding:14px;
+  background:#f7faff;
+  border-radius:12px;
+}
+
+.action-box strong{
+  font-size:13px;
+}
+
+.action-box p{
+  margin:6px 0 0;
+  color:#5e6979;
+  font-size:13px;
+  line-height:1.6;
+}
+
 .score{
   display:flex;
-  gap:12px;
+  gap:13px;
   align-items:center;
-  margin-top:18px;
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px solid #e6ebf2;
 }
 
 .scorebar{
-  height:9px;
+  height:10px;
   background:#e6ebf3;
   border-radius:20px;
   flex:1;
@@ -248,10 +393,19 @@ button:hover{
 .scorebar i{
   display:block;
   height:100%;
-  width:8%;
+  width:0%;
   background:#2463c5;
   border-radius:20px;
-  transition:.5s;
+  transition:width .7s ease;
+}
+
+.score strong{
+  font-size:14px;
+}
+
+.score-value{
+  min-width:38px;
+  text-align:right;
 }
 
 footer{
@@ -259,6 +413,14 @@ footer{
   color:#8993a4;
   font-size:12px;
   padding:30px;
+}
+
+@media(max-width:800px){
+
+  .analysis-summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
 
 @media(max-width:700px){
@@ -272,11 +434,11 @@ footer{
   }
 
   .search button{
-    height:50px;
+    width:100%;
   }
 
-  .analysis-summary{
-    grid-template-columns:1fr;
+  h1{
+    letter-spacing:-2px;
   }
 
   .result-header{
@@ -284,8 +446,26 @@ footer{
     flex-direction:column;
   }
 
-  h1{
-    letter-spacing:-2px;
+  .analysis-summary{
+    grid-template-columns:1fr;
+  }
+
+  .score{
+    flex-wrap:wrap;
+  }
+
+  .scorebar{
+    width:100%;
+    flex-basis:100%;
+    order:2;
+  }
+
+  .result-top{
+    align-items:flex-start;
+  }
+
+  .priority{
+    margin-left:auto;
   }
 }
 </style>
@@ -303,34 +483,31 @@ footer{
 
   <p class="subtitle">
     Identify common application usability problems and get
-    professional recommendations to improve the user experience.
+    professional AI-powered recommendations to improve the user experience.
   </p>
 
   <div class="search">
 
     <input
       id="appName"
+      type="text"
       placeholder="Enter application / website name"
+      autocomplete="off"
     >
 
-    <button onclick="startEvaluation()">
+    <button id="analyzeBtn" onclick="startEvaluation()">
       Analyze UX
     </button>
 
   </div>
 
-  <div
-    id="nameError"
-    style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;"
-  >
-    Please enter application / website name.
+  <div id="nameError" class="message error">
+    Please enter an application or website name.
   </div>
 
-  <div
-    id="invalidApp"
-    style="display:none;color:#d64545;font-size:13px;font-weight:700;margin-top:8px;"
-  >
-    Application not recognized. Please enter a supported application name.
+  <div id="invalidApp" class="message error">
+    Application not recognized. Try Chrome, Instagram, Amazon,
+    YouTube, WhatsApp, Spotify, Netflix, etc.
   </div>
 
 </header>
@@ -338,353 +515,103 @@ footer{
 
 <main class="container">
 
-<section class="card" id="problemCard">
+  <!-- UX PROBLEM CHECKLIST -->
 
-  <h2>Select UX Problems</h2>
+  <section class="card" id="problemCard" style="display:none">
 
-  <div class="small">
-    Tick every problem observed during your field survey or application evaluation.
-  </div>
+    <h2>Select UX Problems</h2>
 
-  <div class="grid" id="problems"></div>
+    <div class="small">
+      Tick every problem observed during your field survey
+      or application evaluation.
+    </div>
 
-  <div class="actions">
+    <div class="grid" id="problems"></div>
 
-    <button onclick="analyze()">
-      Get AI Recommendations
-    </button>
+    <div class="actions">
 
-  </div>
-
-</section>
-
-
-<section class="card" id="result">
-
-  <div class="result-header">
-
-    <div>
-
-      <h2 id="resultTitle">
-        UX Analysis
-      </h2>
-
-      <div
-        class="small"
-        id="resultSub"
-        style="margin:5px 0 0"
-      ></div>
+      <button id="recommendBtn" onclick="analyze()">
+        ✦ Get AI Recommendations
+      </button>
 
     </div>
 
-    <div class="context-pill">
-      ✦
-      <span id="contextType">
-        General Application
-      </span>
-    </div>
-
-  </div>
+  </section>
 
 
-  <div class="analysis-summary">
+  <!-- RESULT -->
 
-    <div class="summary-box">
+  <section class="card" id="result">
 
-      <span>Issues Found</span>
-
-      <strong id="issueCount">
-        0
-      </strong>
-
-    </div>
-
-
-    <div class="summary-box">
-
-      <span>Priority</span>
-
-      <strong id="summaryPriority">
-        Low
-      </strong>
-
-    </div>
-
-
-    <div class="summary-box">
-
-      <span>UX Score</span>
-
-      <strong id="uxScore">
-        —
-      </strong>
-
-    </div>
-
-  </div>
-
-
-  <div id="aiSummary"></div>
-
-  <div id="recommendations"></div>
-
-
-  <div class="score">
-
-    <strong>
-      Overall UX Priority
-    </strong>
-
-    <div class="scorebar">
-      <i id="bar"></i>
-    </div>
-
-    <strong id="priority">
-      Low
-    </strong>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-UX Recommendations • Application Usability & User Experience Evaluation
-</footer>
-
-
-<script>
-
-const data = [
-
-[
-"navigation",
-"Difficult Navigation",
-"Users struggle to find pages or important options."
-],
-
-[
-"interface",
-"Confusing Interface",
-"The interface is difficult to understand at first use."
-],
-
-[
-"buttons",
-"Unclear Buttons",
-"Buttons or actions are difficult to identify."
-],
-
-[
-"colors",
-"Poor Color Combination",
-"Colors reduce readability or make important information unclear."
-],
-
-[
-"loading",
-"Slow Loading",
-"Users have to wait too long for pages or content."
-],
-
-[
-"errors",
-"Poor Error Messages",
-"Users do not understand what went wrong or how to fix it."
-],
-
-[
-"login",
-"Difficult Login / Signup",
-"The login or registration process has unnecessary friction."
-],
-
-[
-"mobile",
-"Poor Mobile Responsiveness",
-"The application is difficult to use on phones."
-],
-
-[
-"accessibility",
-"Accessibility Issues",
-"Some users may have difficulty accessing or understanding the interface."
-],
-
-[
-"steps",
-"Too Many Steps",
-"Users need too many actions to complete a common task."
-],
-
-[
-"content",
-"Unclear Content",
-"Text or information is difficult to understand."
-],
-
-[
-"feedback",
-"Lack of User Feedback",
-"Users are unsure whether their action was successful."
-]
-
-];
-
-
-const box = document.getElementById("problems");
-
-
-data.forEach((item,index)=>{
-
-  box.innerHTML += `
-
-    <label class="problem">
-
-      <input
-        type="checkbox"
-        value="${index}"
-      >
+    <div class="result-header">
 
       <div>
 
-        <strong>
-          ${item[1]}
-        </strong>
+        <h2 id="resultTitle">
+          UX Analysis
+        </h2>
 
-        <span>
-          ${item[2]}
-        </span>
+        <div
+          class="small"
+          id="resultSub"
+          style="margin:5px 0 0"
+        ></div>
 
       </div>
 
-    </label>
+      <div class="context-pill">
+        ✦
+        <span id="contextType">
+          General Application
+        </span>
+      </div>
 
-  `;
-
-});
-
-
-const validApplications = [
-
-"instagram",
-"facebook",
-"snapchat",
-"tiktok",
-"x",
-"twitter",
-"linkedin",
-"reddit",
-"discord",
-
-"amazon",
-"flipkart",
-"myntra",
-"meesho",
-"ebay",
-"ajio",
-"nykaa",
-"shopify",
-
-"whatsapp",
-"telegram",
-"messenger",
-"signal",
-"slack",
-
-"youtube",
-"netflix",
-"spotify",
-"prime video",
-"hotstar",
-"jio cinema",
-"soundcloud",
-
-"google",
-"gmail",
-"google maps",
-"maps",
-"google drive",
-"google docs",
-"google sheets",
-"google meet",
-"google chrome",
-"chrome",
-"google calendar",
-
-"microsoft teams",
-"microsoft word",
-"microsoft excel",
-"microsoft powerpoint",
-"outlook",
-"onedrive",
-"zoom",
-
-"phonepe",
-"paytm",
-"google pay",
-"zomato",
-"swiggy",
-"uber",
-"ola",
-"makemytrip",
-"airbnb",
-
-"canva",
-"coursera",
-"udemy",
-"duolingo",
-"chatgpt"
-
-];
+    </div>
 
 
-function normalizeAppName(value){
+    <div class="analysis-summary">
 
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g," ");
+      <div class="summary-box">
+        <span>Issues Found</span>
+        <strong id="issueCount">0</strong>
+      </div>
 
-}
+      <div class="summary-box">
+        <span>Priority</span>
+        <strong id="summaryPriority">Low</strong>
+      </div>
 
+      <div class="summary-box">
+        <span>UX Score</span>
+        <strong id="uxScore">—</strong>
+      </div>
 
-function isValidApplication(name){
+      <div class="summary-box">
+        <span>UX Category</span>
+        <strong id="categoryText">—</strong>
+      </div>
 
-  return validApplications.includes(
-    normalizeAppName(name)
-  );
-
-}
-
-
-function getCategory(name){
-
-  const n = normalizeAppName(name);
-
-  if([
-    "instagram","facebook","snapchat","tiktok",
-    "x","twitter","linkedin","reddit","discord"
-  ].includes(n))
-    return "Social Media";
+    </div>
 
 
-  if([
-    "amazon","flipkart","myntra","meesho",
-    "ebay","ajio","nykaa","shopify"
-  ].includes(n))
-    return "E-commerce";
+    <div id="recommendations">
+
+      <div class="ai-status">
+
+        <h3>Ready for AI Analysis</h3>
+
+        <p>
+          Select one or more UX problems above and click
+          Get AI Recommendations.
+        </p>
+
+      </div>
+
+    </div>
 
 
-  if([
-    "whatsapp","telegram","messenger",
-    "signal","slack"
-  ].includes(n))
-    return "Messaging";
+    <div class="score">
 
+      <strong>Overall UX Score</strong>
 
-  if([
-    "youtube","netflix","spotify",
-    "
+      <div class="score
