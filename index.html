@@ -7,6 +7,7 @@
 <title>UX Recommendations</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -20,18 +21,18 @@ body{
 }
 
 .container{
-  width:min(1100px,92%);
+  width:min(1050px,92%);
   margin:auto;
 }
 
 header{
   text-align:center;
-  padding:55px 15px 30px;
+  padding:52px 15px 28px;
 }
 
 .badge{
   display:inline-block;
-  padding:8px 16px;
+  padding:8px 15px;
   border-radius:30px;
   background:#e1edff;
   color:#2463c5;
@@ -41,41 +42,40 @@ header{
 }
 
 h1{
-  font-size:clamp(42px,7vw,72px);
-  margin:16px 0 10px;
+  font-size:clamp(38px,7vw,72px);
+  margin:15px 0 8px;
   letter-spacing:-3px;
-  line-height:1;
 }
 
 .subtitle{
   color:#657084;
   font-size:17px;
-  line-height:1.6;
   margin:0 auto;
-  max-width:700px;
+  max-width:680px;
+  line-height:1.6;
 }
 
 .search{
-  margin:28px auto 15px;
+  margin:28px auto 12px;
   display:flex;
   gap:10px;
-  max-width:700px;
+  max-width:760px;
 }
 
 .search input{
   flex:1;
-  padding:17px 20px;
+  padding:18px 20px;
   border:1px solid #d9e1ee;
-  border-radius:14px;
+  border-radius:15px;
   outline:none;
   background:white;
-  font-size:15px;
-  box-shadow:0 8px 25px rgba(29,78,216,.05);
+  font-size:16px;
+  box-shadow:0 8px 25px #1d4ed80d;
 }
 
 .search input:focus{
   border-color:#2463c5;
-  box-shadow:0 0 0 4px rgba(36,99,197,.10);
+  box-shadow:0 0 0 3px #2463c51a;
 }
 
 button{
@@ -86,13 +86,14 @@ button{
   background:#2463c5;
   color:white;
   font-weight:800;
+  font-size:14px;
   cursor:pointer;
   transition:.2s;
 }
 
 button:hover{
   transform:translateY(-2px);
-  opacity:.93;
+  opacity:.94;
 }
 
 button:disabled{
@@ -117,12 +118,12 @@ button:disabled{
 }
 
 .card{
-  background:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.9);
   border:1px solid #e1e7f0;
   border-radius:22px;
-  padding:27px;
-  box-shadow:0 15px 45px rgba(23,52,92,.07);
-  margin:20px 0;
+  padding:25px;
+  box-shadow:0 15px 45px #17345c12;
+  margin:18px 0;
 }
 
 .card h2{
@@ -140,16 +141,16 @@ button:disabled{
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:13px;
+  gap:12px;
 }
 
 .problem{
   display:flex;
   align-items:flex-start;
   gap:12px;
-  padding:17px;
+  padding:16px;
   border:1px solid #e3e8f1;
-  border-radius:16px;
+  border-radius:15px;
   background:#fbfcfe;
   cursor:pointer;
   transition:.2s;
@@ -158,14 +159,17 @@ button:disabled{
 .problem:hover{
   border-color:#9abcf0;
   background:#f5f9ff;
-  transform:translateY(-1px);
+}
+
+.problem.selected{
+  border-color:#2463c5;
+  background:#f1f6ff;
 }
 
 .problem input{
   width:19px;
   height:19px;
-  margin-top:2px;
-  flex:none;
+  margin:2px 0 0;
   accent-color:#2463c5;
   cursor:pointer;
 }
@@ -179,19 +183,22 @@ button:disabled{
   display:block;
   color:#7a8495;
   font-size:12px;
-  margin-top:5px;
+  margin-top:4px;
   line-height:1.5;
 }
 
 .actions{
   text-align:center;
-  margin:27px 0 5px;
+  margin:25px 0 5px;
 }
 
-.actions button{
-  min-width:230px;
+.secondary{
+  background:#eef4ff;
+  color:#2463c5;
+  margin-left:8px;
 }
 
+#problemCard,
 #result{
   display:none;
 }
@@ -200,17 +207,21 @@ button:disabled{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:20px;
-  padding-bottom:19px;
-  margin-bottom:20px;
+  gap:16px;
+  padding-bottom:18px;
+  margin-bottom:18px;
   border-bottom:1px solid #e6ebf2;
+}
+
+.result-header h2{
+  margin:0;
 }
 
 .context-pill{
   display:inline-flex;
   align-items:center;
   gap:7px;
-  padding:9px 14px;
+  padding:8px 13px;
   border-radius:999px;
   background:#edf4ff;
   color:#2463c5;
@@ -221,25 +232,25 @@ button:disabled{
 
 .analysis-summary{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:12px;
   margin-bottom:20px;
 }
 
 .summary-box{
-  padding:17px;
+  padding:16px;
   border:1px solid #e3e8f1;
-  border-radius:16px;
+  border-radius:15px;
   background:#fbfcfe;
 }
 
 .summary-box span{
   display:block;
   color:#7b8697;
-  font-size:10px;
-  font-weight:800;
+  font-size:11px;
+  font-weight:700;
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:.7px;
 }
 
 .summary-box strong{
@@ -248,138 +259,61 @@ button:disabled{
   margin-top:6px;
 }
 
-.ai-status{
+.result-item{
   border-left:4px solid #2463c5;
   background:#f7faff;
-  border-radius:13px;
-  padding:17px 18px;
-  margin:15px 0;
+  border-radius:12px;
+  padding:18px;
+  margin:13px 0;
 }
 
-.ai-status h3{
-  margin:0 0 7px;
-  font-size:15px;
+.result-item h3{
+  margin:0 0 8px;
+  font-size:16px;
 }
 
-.ai-status p{
+.result-item p{
   margin:0;
   color:#606b7c;
-  line-height:1.6;
+  line-height:1.65;
   font-size:14px;
 }
 
-.result-item{
-  position:relative;
-  border:1px solid #e1e7f0;
-  border-radius:18px;
-  background:white;
-  padding:21px;
-  margin:14px 0;
-  overflow:hidden;
+.result-item .reason{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #e1e8f2;
 }
 
-.result-item:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:4px;
-  background:#2463c5;
-}
-
-.result-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.result-number{
-  width:31px;
-  height:31px;
-  border-radius:9px;
-  background:#eef4ff;
-  color:#2463c5;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:900;
-  flex:none;
-}
-
-.result-top h3{
-  margin:0;
-  font-size:16px;
-  flex:1;
-  line-height:1.4;
-}
-
-.priority{
-  display:inline-flex;
-  padding:6px 11px;
+.severity{
+  display:inline-block;
+  padding:5px 9px;
   border-radius:999px;
   font-size:10px;
   font-weight:900;
-  white-space:nowrap;
+  margin-bottom:9px;
 }
 
-.priority.high{
+.severity.high{
   background:#fff0f0;
   color:#c43d3d;
 }
 
-.priority.medium{
+.severity.medium{
   background:#fff8e8;
   color:#a76b00;
 }
 
-.priority.low{
+.severity.low{
   background:#edf8f0;
   color:#287c48;
 }
 
-.result-label{
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  font-weight:900;
-  color:#8792a4;
-  margin-top:17px;
-}
-
-.result-text{
-  margin:6px 0 0;
-  color:#4f5b6d;
-  font-size:14px;
-  line-height:1.7;
-}
-
-.action-box{
-  margin-top:14px;
-  padding:14px;
-  background:#f7faff;
-  border-radius:12px;
-}
-
-.action-box strong{
-  font-size:13px;
-}
-
-.action-box p{
-  margin:6px 0 0;
-  color:#5e6979;
-  font-size:13px;
-  line-height:1.6;
-}
-
 .score{
   display:flex;
-  gap:13px;
+  gap:12px;
   align-items:center;
-  margin-top:24px;
-  padding-top:18px;
-  border-top:1px solid #e6ebf2;
+  margin-top:22px;
 }
 
 .scorebar{
@@ -396,16 +330,28 @@ button:disabled{
   width:0%;
   background:#2463c5;
   border-radius:20px;
-  transition:width .7s ease;
+  transition:width .5s ease;
 }
 
-.score strong{
-  font-size:14px;
+.loading{
+  text-align:center;
+  padding:22px;
 }
 
-.score-value{
-  min-width:38px;
-  text-align:right;
+.loading-spinner{
+  width:25px;
+  height:25px;
+  border:3px solid #dce7f7;
+  border-top-color:#2463c5;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 10px;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
 }
 
 footer{
@@ -413,14 +359,7 @@ footer{
   color:#8993a4;
   font-size:12px;
   padding:30px;
-}
-
-@media(max-width:800px){
-
-  .analysis-summary{
-    grid-template-columns:repeat(2,1fr);
-  }
-
+  line-height:1.6;
 }
 
 @media(max-width:700px){
@@ -437,17 +376,13 @@ footer{
     width:100%;
   }
 
-  h1{
-    letter-spacing:-2px;
+  .analysis-summary{
+    grid-template-columns:1fr;
   }
 
   .result-header{
     align-items:flex-start;
     flex-direction:column;
-  }
-
-  .analysis-summary{
-    grid-template-columns:1fr;
   }
 
   .score{
@@ -460,16 +395,15 @@ footer{
     order:2;
   }
 
-  .result-top{
-    align-items:flex-start;
+  h1{
+    letter-spacing:-2px;
   }
 
-  .priority{
-    margin-left:auto;
-  }
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -506,8 +440,7 @@ footer{
   </div>
 
   <div id="invalidApp" class="message error">
-    Application not recognized. Try Chrome, Instagram, Amazon,
-    YouTube, WhatsApp, Spotify, Netflix, etc.
+    Application not recognized. Please enter a supported application name.
   </div>
 
 </header>
@@ -515,103 +448,870 @@ footer{
 
 <main class="container">
 
-  <!-- UX PROBLEM CHECKLIST -->
 
-  <section class="card" id="problemCard" style="display:none">
+<!-- ================= PROBLEM CHECKLIST ================= -->
 
-    <h2>Select UX Problems</h2>
+<section class="card" id="problemCard">
 
-    <div class="small">
-      Tick every problem observed during your field survey
-      or application evaluation.
-    </div>
+  <h2>Select UX Problems</h2>
 
-    <div class="grid" id="problems"></div>
+  <div class="small">
+    Tick every problem observed during your field survey or application evaluation.
+    You can select multiple problems.
+  </div>
 
-    <div class="actions">
+  <div class="grid" id="problems"></div>
 
-      <button id="recommendBtn" onclick="analyze()">
-        ✦ Get AI Recommendations
-      </button>
+  <div class="actions">
 
-    </div>
+    <button onclick="analyze()">
+      Get AI Recommendations
+    </button>
 
-  </section>
+    <button
+      class="secondary"
+      onclick="clearProblems()"
+      type="button"
+    >
+      Clear
+    </button>
 
+  </div>
 
-  <!-- RESULT -->
-
-  <section class="card" id="result">
-
-    <div class="result-header">
-
-      <div>
-
-        <h2 id="resultTitle">
-          UX Analysis
-        </h2>
-
-        <div
-          class="small"
-          id="resultSub"
-          style="margin:5px 0 0"
-        ></div>
-
-      </div>
-
-      <div class="context-pill">
-        ✦
-        <span id="contextType">
-          General Application
-        </span>
-      </div>
-
-    </div>
+</section>
 
 
-    <div class="analysis-summary">
+<!-- ================= RESULT ================= -->
 
-      <div class="summary-box">
-        <span>Issues Found</span>
-        <strong id="issueCount">0</strong>
-      </div>
+<section class="card" id="result">
 
-      <div class="summary-box">
-        <span>Priority</span>
-        <strong id="summaryPriority">Low</strong>
-      </div>
+  <div class="result-header">
 
-      <div class="summary-box">
-        <span>UX Score</span>
-        <strong id="uxScore">—</strong>
-      </div>
+    <div>
 
-      <div class="summary-box">
-        <span>UX Category</span>
-        <strong id="categoryText">—</strong>
-      </div>
+      <h2 id="resultTitle">
+        UX Analysis
+      </h2>
+
+      <div
+        class="small"
+        id="resultSub"
+        style="margin:5px 0 0"
+      ></div>
 
     </div>
 
+    <div class="context-pill">
+      ✦
+      <span id="contextType">
+        General Application
+      </span>
+    </div>
 
-    <div id="recommendations">
+  </div>
 
-      <div class="ai-status">
 
-        <h3>Ready for AI Analysis</h3>
+  <div class="analysis-summary">
+
+    <div class="summary-box">
+
+      <span>
+        Issues Found
+      </span>
+
+      <strong id="issueCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <span>
+        Priority
+      </span>
+
+      <strong id="summaryPriority">
+        Low
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <span>
+        UX Score
+      </span>
+
+      <strong id="uxScore">
+        —
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <div id="recommendations">
+
+    <div class="loading">
+
+      <div class="loading-spinner"></div>
+
+      <strong>
+        Generating AI Recommendations...
+      </strong>
+
+      <p>
+        Gemini AI is analysing the selected UX problems.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="score">
+
+    <strong>
+      Overall UX Score
+    </strong>
+
+    <div class="scorebar">
+      <i id="bar"></i>
+    </div>
+
+    <strong id="priority">
+      —
+    </strong>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  UX Recommendations • Application Usability & User Experience Evaluation
+
+</footer>
+
+
+<script>
+
+
+/* =========================================================
+   UX PROBLEM DATA
+========================================================= */
+
+const data = [
+
+  {
+    key:"navigation",
+    title:"Difficult Navigation",
+    description:
+      "Users struggle to find pages or important options.",
+    recommendation:
+      "Improve navigation with clear labels, logical grouping, and a consistent structure. Keep important actions easy to reach."
+  },
+
+  {
+    key:"interface",
+    title:"Confusing Interface",
+    description:
+      "The interface is difficult to understand at first use.",
+    recommendation:
+      "Simplify the interface, reduce unnecessary elements, and create a clear visual hierarchy so users know what to do next."
+  },
+
+  {
+    key:"buttons",
+    title:"Unclear Buttons",
+    description:
+      "Buttons or actions are difficult to identify.",
+    recommendation:
+      "Use descriptive action labels, consistent button styles, adequate spacing, and clear interaction states."
+  },
+
+  {
+    key:"colors",
+    title:"Poor Color Combination",
+    description:
+      "Colors reduce readability or make important information unclear.",
+    recommendation:
+      "Use a consistent color palette with sufficient contrast and reserve accent colors for important actions and feedback."
+  },
+
+  {
+    key:"loading",
+    title:"Slow Loading",
+    description:
+      "Users have to wait too long for pages or content.",
+    recommendation:
+      "Optimize content delivery, reduce unnecessary requests, and provide clear loading feedback."
+  },
+
+  {
+    key:"errors",
+    title:"Poor Error Messages",
+    description:
+      "Users do not understand what went wrong or how to fix it.",
+    recommendation:
+      "Show a specific and friendly message near the affected action and explain how the user can recover."
+  },
+
+  {
+    key:"login",
+    title:"Difficult Login / Signup",
+    description:
+      "The login or registration process has unnecessary friction.",
+    recommendation:
+      "Reduce unnecessary fields, provide clear validation, explain requirements, and give immediate submission feedback."
+  },
+
+  {
+    key:"mobile",
+    title:"Poor Mobile Responsiveness",
+    description:
+      "The application is difficult to use on phones.",
+    recommendation:
+      "Use responsive layouts, touch-friendly controls, readable text, and test important flows on different screen sizes."
+  },
+
+  {
+    key:"accessibility",
+    title:"Accessibility Issues",
+    description:
+      "Some users may have difficulty accessing or understanding the interface.",
+    recommendation:
+      "Improve contrast, keyboard access, labels, focus states, text alternatives, and other accessibility fundamentals."
+  },
+
+  {
+    key:"steps",
+    title:"Too Many Steps",
+    description:
+      "Users need too many actions to complete a common task.",
+    recommendation:
+      "Simplify the task flow, remove redundant screens, combine related steps where appropriate, and show progress for longer tasks."
+  },
+
+  {
+    key:"content",
+    title:"Unclear Content",
+    description:
+      "Text, instructions, or information is difficult to understand.",
+    recommendation:
+      "Use concise language, meaningful headings, short sections, helpful labels, and place guidance close to the relevant action."
+  },
+
+  {
+    key:"feedback",
+    title:"Lack of User Feedback",
+    description:
+      "Users are unsure whether their action was successful.",
+    recommendation:
+      "Provide immediate feedback such as success messages, progress indicators, confirmation states, and inline validation."
+  }
+
+];
+
+
+/* =========================================================
+   SUPPORTED APPLICATIONS
+========================================================= */
+
+const validApplications = [
+
+  "instagram",
+  "facebook",
+  "snapchat",
+  "tiktok",
+  "x",
+  "twitter",
+  "linkedin",
+  "reddit",
+  "discord",
+
+  "amazon",
+  "flipkart",
+  "myntra",
+  "meesho",
+  "ebay",
+  "ajio",
+  "nykaa",
+  "shopify",
+
+  "whatsapp",
+  "telegram",
+  "messenger",
+  "signal",
+  "slack",
+
+  "youtube",
+  "netflix",
+  "spotify",
+  "prime video",
+  "hotstar",
+  "jio cinema",
+  "soundcloud",
+
+  "google",
+  "gmail",
+  "google maps",
+  "maps",
+  "google drive",
+  "google docs",
+  "google sheets",
+  "google meet",
+  "google chrome",
+  "chrome",
+  "google calendar",
+
+  "microsoft teams",
+  "microsoft word",
+  "microsoft excel",
+  "microsoft powerpoint",
+  "outlook",
+  "onedrive",
+  "zoom",
+
+  "phonepe",
+  "paytm",
+  "google pay",
+  "zomato",
+  "swiggy",
+  "uber",
+  "ola",
+  "makemytrip",
+  "airbnb",
+
+  "canva",
+  "coursera",
+  "udemy",
+  "duolingo",
+  "chatgpt"
+
+];
+
+
+/* =========================================================
+   APPLICATION CATEGORY
+========================================================= */
+
+const categoryGroups = {
+
+  "Social Media":[
+    "instagram",
+    "facebook",
+    "snapchat",
+    "tiktok",
+    "x",
+    "twitter",
+    "linkedin",
+    "reddit",
+    "discord"
+  ],
+
+  "E-commerce":[
+    "amazon",
+    "flipkart",
+    "myntra",
+    "meesho",
+    "ebay",
+    "ajio",
+    "nykaa",
+    "shopify"
+  ],
+
+  "Messaging":[
+    "whatsapp",
+    "telegram",
+    "messenger",
+    "signal",
+    "slack"
+  ],
+
+  "Media / Content":[
+    "youtube",
+    "netflix",
+    "spotify",
+    "prime video",
+    "hotstar",
+    "jio cinema",
+    "soundcloud"
+  ],
+
+  "Productivity":[
+    "google",
+    "gmail",
+    "google maps",
+    "maps",
+    "google drive",
+    "google docs",
+    "google sheets",
+    "google meet",
+    "google chrome",
+    "chrome",
+    "google calendar",
+    "microsoft teams",
+    "microsoft word",
+    "microsoft excel",
+    "microsoft powerpoint",
+    "outlook",
+    "onedrive",
+    "zoom"
+  ],
+
+  "Payments / Services":[
+    "phonepe",
+    "paytm",
+    "google pay",
+    "zomato",
+    "swiggy",
+    "uber",
+    "ola",
+    "makemytrip",
+    "airbnb"
+  ],
+
+  "Design / Learning":[
+    "canva",
+    "coursera",
+    "udemy",
+    "duolingo",
+    "chatgpt"
+  ]
+
+};
+
+
+/* =========================================================
+   NORMALIZE APPLICATION NAME
+========================================================= */
+
+function normalizeAppName(value){
+
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g," ");
+
+}
+
+
+/* =========================================================
+   CHECK APPLICATION
+========================================================= */
+
+function isValidApplication(name){
+
+  const normalized =
+    normalizeAppName(name);
+
+  return validApplications.includes(normalized);
+
+}
+
+
+/* =========================================================
+   GET APPLICATION CATEGORY
+========================================================= */
+
+function getCategory(name){
+
+  const normalized =
+    normalizeAppName(name);
+
+  for(
+    const [category, apps]
+    of Object.entries(categoryGroups)
+  ){
+
+    if(apps.includes(normalized)){
+      return category;
+    }
+
+  }
+
+  return "General Application";
+
+}
+
+
+/* =========================================================
+   CREATE PROBLEM CHECKLIST
+========================================================= */
+
+const problemBox =
+  document.getElementById("problems");
+
+
+data.forEach((item,index)=>{
+
+  const label =
+    document.createElement("label");
+
+  label.className =
+    "problem";
+
+  label.innerHTML = `
+
+    <input
+      type="checkbox"
+      value="${index}"
+    >
+
+    <div>
+
+      <strong>
+        ${item.title}
+      </strong>
+
+      <span>
+        ${item.description}
+      </span>
+
+    </div>
+
+  `;
+
+  const checkbox =
+    label.querySelector("input");
+
+  checkbox.addEventListener(
+    "change",
+    function(){
+
+      label.classList.toggle(
+        "selected",
+        this.checked
+      );
+
+    }
+  );
+
+  problemBox.appendChild(label);
+
+});
+
+
+/* =========================================================
+   INPUT EVENTS
+========================================================= */
+
+document
+  .getElementById("appName")
+  .addEventListener("input",function(){
+
+    document
+      .getElementById("nameError")
+      .style.display="none";
+
+    document
+      .getElementById("invalidApp")
+      .style.display="none";
+
+  });
+
+
+document
+  .getElementById("appName")
+  .addEventListener("keydown",function(event){
+
+    if(event.key==="Enter"){
+      startEvaluation();
+    }
+
+  });
+
+
+/* =========================================================
+   START EVALUATION
+========================================================= */
+
+function startEvaluation(){
+
+  const input =
+    document.getElementById("appName");
+
+  const name =
+    input.value.trim();
+
+  const nameError =
+    document.getElementById("nameError");
+
+  const invalidApp =
+    document.getElementById("invalidApp");
+
+  const problemCard =
+    document.getElementById("problemCard");
+
+  const result =
+    document.getElementById("result");
+
+
+  nameError.style.display="none";
+  invalidApp.style.display="none";
+
+
+  if(!name){
+
+    nameError.style.display="block";
+
+    problemCard.style.display="none";
+
+    result.style.display="none";
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  if(!isValidApplication(name)){
+
+    invalidApp.style.display="block";
+
+    problemCard.style.display="none";
+
+    result.style.display="none";
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  /* Valid application */
+
+  problemCard.style.display="block";
+
+  result.style.display="none";
+
+
+  document
+    .getElementById("contextType")
+    .textContent=getCategory(name);
+
+
+  problemCard.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+/* =========================================================
+   GET SELECTED PROBLEMS
+========================================================= */
+
+function getSelectedProblems(){
+
+  const checked =
+    document.querySelectorAll(
+      '.problem input:checked'
+    );
+
+  return [...checked].map(
+    checkbox =>
+      data[Number(checkbox.value)]
+  );
+
+}
+
+
+/* =========================================================
+   CALCULATE PRIORITY
+========================================================= */
+
+function calculatePriority(count){
+
+  if(count>=7){
+    return "High";
+  }
+
+  if(count>=4){
+    return "Medium";
+  }
+
+  return "Low";
+
+}
+
+
+/* =========================================================
+   CALCULATE SCORE
+========================================================= */
+
+function calculateBaseScore(count){
+
+  if(count===0){
+    return 100;
+  }
+
+  const score =
+    100 - (count * 9);
+
+  return Math.max(
+    25,
+    Math.min(100,score)
+  );
+
+}
+
+
+/* =========================================================
+   ANALYZE
+========================================================= */
+
+async function analyze(){
+
+  const input =
+    document.getElementById("appName");
+
+  const name =
+    input.value.trim();
+
+  const problemCard =
+    document.getElementById("problemCard");
+
+  const result =
+    document.getElementById("result");
+
+  const recommendations =
+    document.getElementById("recommendations");
+
+
+  if(!name){
+
+    startEvaluation();
+
+    return;
+
+  }
+
+
+  if(!isValidApplication(name)){
+
+    startEvaluation();
+
+    return;
+
+  }
+
+
+  const selected =
+    getSelectedProblems();
+
+
+  /* Require at least one problem */
+
+  if(selected.length===0){
+
+    recommendations.innerHTML = `
+
+      <div class="result-item">
+
+        <h3>
+          Select at least one UX problem
+        </h3>
 
         <p>
-          Select one or more UX problems above and click
-          Get AI Recommendations.
+          Please select one or more problems
+          observed during your application evaluation.
         </p>
 
       </div>
 
-    </div>
+    `;
+
+    result.style.display="block";
+
+    result.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+    return;
+
+  }
 
 
-    <div class="score">
+  const priority =
+    calculatePriority(selected.length);
 
-      <strong>Overall UX Score</strong>
+  const baseScore =
+    calculateBaseScore(selected.length);
 
-      <div class="score
+
+  /* Show result section */
+
+  result.style.display="block";
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      name + " — AI UX Analysis";
+
+
+  document
+    .getElementById("resultSub")
+    .textContent =
+      selected.length +
+      " UX problem(s) selected from the evaluation checklist.";
+
+
+  document
+    .getElementById("contextType")
+    .textContent =
+      getCategory(name);
+
+
+  document
+    .getElementById("issueCount")
+    .textContent =
+      selected.length;
+
+
+  document
+    .getElementById("summaryPriority")
+    .textContent =
+      priority;
+
+
+  document
+    .getElementById("uxScore")
+    .textContent =
+      baseScore;
+
+
+  document
+    .getElementById("priority")
+    .textContent =
+      priority;
+
+
+  document
+    .getElementById("bar")
+    .style.width =
+      baseScore + "%";
+
+
+  /* Loading */
+
+  recommendations.innerHTML = `
+
+    <div class="loading">
+
+      <div class="loading-spinner"></div>
+
+     
